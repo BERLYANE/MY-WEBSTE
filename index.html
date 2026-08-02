@@ -1,159 +1,197 @@
-
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>لوازم خانه و آشپزخانه برلیان</title>
+<title>BERLYANE | فروشگاه لوازم آشپزخانه</title>
 
-<style>
-body {
-    margin:0;
-    font-family:tahoma, sans-serif;
-    background:#fff8e7;
-    color:#333;
-}
+<link rel="stylesheet" href="style.css">
 
-header {
-    background:#111;
-    color:#fff;
-    padding:20px;
-    text-align:center;
-}
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;700;900&display=swap" rel="stylesheet">
 
-header h1 {
-    color:#f5b400;
-}
-
-nav {
-    background:#f5b400;
-    padding:12px;
-    text-align:center;
-}
-
-nav a {
-    color:#222;
-    text-decoration:none;
-    margin:10px;
-    font-weight:bold;
-}
-
-.hero {
-    padding:50px 20px;
-    text-align:center;
-    background:linear-gradient(#ffd95a,#ff9d00);
-}
-
-.hero h2 {
-    font-size:35px;
-}
-
-button {
-    background:#111;
-    color:white;
-    padding:12px 25px;
-    border:none;
-    border-radius:10px;
-}.categories {
-    display:flex;
-    flex-wrap:wrap;
-    justify-content:center;
-    gap:15px;
-    padding:30px;
-}
-
-.card {
-    background:white;
-    width:180px;
-    padding:20px;
-    text-align:center;
-    border-radius:15px;
-    box-shadow:0 0 10px #ddd;
-}
-
-footer {
-    background:#111;
-    color:white;
-    text-align:center;
-    padding:20px;
-}
-</style>
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
 
 </head>
 
 <body>
 
 <header>
-<h1>BERLYANE</h1>
-<h3>لوازم خانه و آشپزخانه برلیان</h3>
-</header>
 
-<nav>
-<a href="#">خانه</a>
-<a href="#">محصولات</a>
-<a href="#">درباره ما</a>
-<a href="#">تماس با ما</a>
+<nav class="navbar">
+
+<div class="logo">
+
+<img src="images/logo.png">
+
+<h2>BERLYANE</h2>
+
+</div>
+
+<div class="search">
+
+<input type="text" placeholder="جستجوی محصولات...">
+
+<button><i class="fa fa-search"></i></button>
+
+</div>
+
+<div class="icons">
+
+<i class="fa fa-user"></i>
+
+<i class="fa fa-heart"></i>
+
+<i class="fa fa-cart-shopping"></i>
+
+</div>
+
 </nav>
 
+</header>
 
 <section class="hero">
 
-<h2>زیبایی آشپزخانه شما با برلیان</h2>
+<div class="overlay">
 
-<p>
-انواع ظروف، سرویس آشپزخانه، لوازم برقی و محصولات خانه
-</p>
+<h1>فروشگاه لوکس BERLYANE</h1>
 
-<button>
-مشاهده محصولات
-</button>
+<p>خاص‌ترین لوازم آشپزخانه با بهترین کیفیت</p>
+
+<a href="#products" class="btn">مشاهده محصولات</a>
+
+</div>
 
 </section>
-
-
-<h2 style="text-align:center">
-دسته بندی محصولات
-</h2>
-
 
 <section class="categories">
 
-<div class="card">تابه و قابلمه</div>
+<h2>دسته بندی محصولات</h2>
 
-<div class="card">چینی و آرکوپال</div>
+<div class="cat-box">
 
-<div class="card">لیوان و ماگ</div>
+<div class="card">
+<img src="images/products/pan.jpg">
+<h3>تاوه و قابلمه</h3>
+</div>
 
-<div class="card">فلاسک و قمقمه</div>
+<div class="card">
+<img src="images/products/china.jpg">
+<h3>چینی و آرکوپال</h3>
+</div>
 
-<div class="card">لوازم برقی</div>
+<div class="card">
+<img src="images/products/mug.jpg">
+<h3>لیوان و ماگ</h3>
+</div>
 
-<div class="card">ظروف فریزری</div>
+<div class="card">
+<img src="images/products/flask.jpg">
+<h3>فلاسک و قمقمه</h3>
+</div>
 
-<div class="card">ابزار آشپزخانه</div>
+<div class="card">
+<img src="images/products/electric.jpg">
+<h3>لوازم برقی</h3>
+</div>
 
-<div class="card">کریستال و سرامیک</div>
+<div class="card">
+<img src="images/products/freezer.jpg">
+<h3>ظروف فریزری</h3>
+</div>
+
+<div class="card">
+<img src="images/products/tools.jpg">
+<h3>ابزار آشپزخانه</h3>
+</div>
+
+<div class="card">
+<img src="images/products/salad.jpg">
+<h3>سرویس سالاد</h3>
+</div>
+
+<div class="card">
+<img src="images/products/ceramic.jpg">
+<h3>سرامیک</h3>
+</div>
+
+<div class="card">
+<img src="images/products/turk.jpg">
+<h3>لیوان ترک</h3>
+</div>
+
+<div class="card">
+<img src="images/products/teapot.jpg">
+<h3>قوری</h3>
+</div>
+
+<div class="card">
+<img src="images/products/wrap.jpg">
+<h3>فیلم بسته بندی</h3>
+</div>
+
+</div>
 
 </section>
 
+<section id="products" class="products">
+
+<h2>محصولات ویژه</h2>
+
+<div class="product-grid">
+
+<div class="product">
+
+<img src="images/products/pan.jpg">
+
+<h3>سرویس قابلمه BERLYANE</h3>
+
+<p>کیفیت عالی | طراحی مدرن</p>
+
+<button>مشاهده محصول</button>
+
+</div>
+
+<div class="product">
+
+<img src="images/products/flask.jpg">
+
+<h3>فلاسک استیل</h3>
+
+<p>نگهداری دما تا ۲۴ ساعت</p>
+
+<button>مشاهده محصول</button>
+
+</div>
+
+<div class="product">
+
+<img src="images/products/mug.jpg">
+
+<h3>ماگ سرامیکی</h3>
+
+<p>طرح خاص و مدرن</p>
+
+<button>مشاهده محصول</button>
+
+</div>
+
+</div>
+
+</section>
 
 <footer>
 
-<p>
-تماس فروشگاه: 01342573412
-</p>
+<h2>BERLYANE</h2>
 
-<p>
-Instagram: @berelyane_kitchen
-</p>
-
-<p>
-لوازم خانه و آشپزخانه برلیان
-</p>
+<p>تمامی حقوق محفوظ است © 2026</p>
 
 </footer>
 
+<script src="script.js"></script>
 
 </body>
+
 </html>
