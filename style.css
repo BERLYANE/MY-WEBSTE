@@ -434,3 +434,7 @@ background:white;
 transform:scale(1.08);
 
 }
+.logo {
+  border-radius: 50%;
+  overflow: hidden;
+}
