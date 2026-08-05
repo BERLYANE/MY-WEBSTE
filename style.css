@@ -6,7 +6,7 @@
 }
 
 body {
-  background-color: #ff8c00;
+  background-color: #000000;
 }
 
 .navbar{
@@ -432,8 +432,3 @@ background:white;
 
 transform:scale(1.08);
 
-}
-
-body {
-    background-color: #ff8c00 !important;
-}
