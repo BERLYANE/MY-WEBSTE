@@ -3,11 +3,312 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>خانه‌کالا — فروشگاه دموی لوازم خانگی</title>
-<meta name="description" content="دموی یک فروشگاه اینترنتی لوازم خانگی — فقط برای نمایش، بدون درگاه پرداخت واقعی.">
+<title>خانه‌کالا — فروشگاه لوازم خانگی</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/style.css">
+<style>
+/* ===== Tokens ===== */
+:root {
+  --charcoal: #0E0E10;
+  --charcoal-2: #1B1B1E;
+  --porcelain: #F7F6F2;
+  --panel: #FFFFFF;
+  --enamel: #171717;
+  --enamel-light: #2B2B2E;
+  --brass: #B8922B;
+  --brass-light: #D8B653;
+  --graphite: #202022;
+  --muted: #6F6D64;
+  --sage: #171717;
+  --rust: #6F6D64;
+  --border: #E6E2D6;
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --font-display: 'Vazirmatn', sans-serif;
+  --font-body: 'Vazirmatn', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  --shadow-card: 0 1px 2px rgba(14,14,16,0.06), 0 4px 12px rgba(14,14,16,0.05);
+  --shadow-lift: 0 10px 28px rgba(14,14,16,0.16);
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  font-family: var(--font-body);
+  background: var(--porcelain);
+  color: var(--graphite);
+  line-height: 1.6;
+}
+h1, h2, h3 { font-family: var(--font-display); margin: 0; }
+button, select, input { font-family: inherit; }
+
+.skip-link {
+  position: absolute; right: -9999px; top: 0; background: var(--brass); color: #fff;
+  padding: 10px 16px; z-index: 200; border-radius: var(--radius-sm);
+}
+.skip-link:focus { right: 12px; top: 12px; }
+
+/* ===== Topbar ===== */
+.topbar {
+  position: sticky; top: 0; z-index: 50;
+  background: var(--charcoal);
+  border-bottom: 3px solid var(--brass);
+}
+.topbar-inner {
+  max-width: 1200px; margin: 0 auto;
+  display: flex; align-items: center; gap: 20px;
+  padding: 12px 20px;
+}
+.brand { display: flex; align-items: center; gap: 8px; color: #fff; flex-shrink: 0; }
+.brand-mark {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 34px; height: 34px; border-radius: var(--radius-sm);
+  background: var(--brass); color: var(--charcoal); font-weight: 800; font-size: 18px;
+}
+.brand-name { font-family: var(--font-display); font-weight: 800; font-size: 1.15rem; letter-spacing: 0.3px; }
+
+.search-wrap { flex: 1; }
+#searchInput {
+  width: 100%; padding: 10px 14px; border-radius: var(--radius-sm);
+  border: 1px solid transparent; background: #363B43; color: #fff; font-size: 0.95rem;
+  transition: background 0.15s, box-shadow 0.15s;
+}
+#searchInput::placeholder { color: #9AA0A6; }
+#searchInput:focus { outline: none; background: #3F454E; box-shadow: 0 0 0 2px var(--brass-light); }
+
+.cart-btn {
+  display: flex; align-items: center; gap: 8px;
+  background: var(--brass); color: var(--charcoal); border: none;
+  padding: 10px 16px; border-radius: var(--radius-sm); font-weight: 700; cursor: pointer;
+  flex-shrink: 0; transition: background 0.15s, transform 0.1s;
+}
+.cart-btn:hover { background: var(--brass-light); }
+.cart-btn:active { transform: scale(0.97); }
+.cart-count {
+  background: var(--charcoal); color: #fff; border-radius: 999px;
+  min-width: 20px; height: 20px; display: inline-flex; align-items: center; justify-content: center;
+  font-size: 0.75rem; font-family: var(--font-mono); padding: 0 5px;
+}
+
+/* ===== Nameplate hero ===== */
+.nameplate {
+  max-width: 1200px; margin: 32px auto 0; padding: 0 20px;
+}
+.nameplate-panel {
+  background: linear-gradient(155deg, var(--charcoal) 0%, var(--charcoal-2) 100%);
+  border: 1px solid #40454D;
+  border-inline-start: 6px solid var(--brass);
+  border-radius: var(--radius-md);
+  padding: 32px clamp(20px, 4vw, 44px);
+  color: #F2F0EA;
+  position: relative;
+  overflow: hidden;
+}
+.nameplate-panel::before {
+  content: "";
+  position: absolute; inset: 0;
+  background-image: repeating-linear-gradient(135deg, rgba(255,255,255,0.025) 0 2px, transparent 2px 14px);
+  pointer-events: none;
+}
+.nameplate-row.nameplate-title { display: flex; align-items: baseline; gap: 12px; margin-bottom: 10px; }
+.nameplate-eyebrow {
+  font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 2px;
+  color: var(--brass-light); border: 1px solid var(--brass); border-radius: 3px; padding: 2px 7px;
+}
+.nameplate-title h1 { font-size: clamp(1.7rem, 4vw, 2.4rem); font-weight: 800; }
+.nameplate-tagline { max-width: 46em; color: #C9CCD1; margin: 0 0 22px; font-size: 1.02rem; }
+
+.nameplate-specs {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 14px 24px; margin: 0 0 18px; padding: 18px 0 0; border-top: 1px dashed #454A52;
+}
+.nameplate-specs dt {
+  font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: 1.5px; color: #9AA0A6;
+}
+.nameplate-specs dd {
+  margin: 3px 0 0; font-family: var(--font-mono); font-size: 0.92rem; font-weight: 500; color: #F2F0EA;
+}
+.nameplate-note { font-size: 0.85rem; color: #9AA0A6; margin: 0; }
+
+/* ===== Controls ===== */
+.controls {
+  max-width: 1200px; margin: 26px auto 0; padding: 0 20px;
+  display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap;
+}
+.chips {
+  display: flex; gap: 8px; overflow-x: auto; padding-bottom: 4px;
+  scrollbar-width: thin;
+}
+.chip {
+  flex-shrink: 0; border: 1px solid var(--border); background: var(--panel);
+  color: var(--graphite); padding: 7px 16px; border-radius: 999px; font-size: 0.86rem;
+  cursor: pointer; transition: all 0.15s; font-weight: 500;
+}
+.chip:hover { border-color: var(--enamel); color: var(--enamel); }
+.chip[aria-selected="true"] {
+  background: var(--enamel); border-color: var(--enamel); color: #fff;
+}
+.sort-wrap { display: flex; align-items: center; gap: 8px; font-size: 0.86rem; color: var(--muted); flex-shrink: 0; }
+#sortSelect {
+  border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 7px 10px; background: var(--panel); color: var(--graphite);
+}
+
+.results-meta {
+  max-width: 1200px; margin: 16px auto 0; padding: 0 20px;
+  font-size: 0.85rem; color: var(--muted); font-family: var(--font-mono);
+}
+
+/* ===== Grid & cards ===== */
+.grid {
+  max-width: 1200px; margin: 12px auto 40px; padding: 0 20px;
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 18px;
+}
+.card {
+  background: var(--panel); border: 1px solid var(--border); border-radius: var(--radius-md);
+  overflow: hidden; display: flex; flex-direction: column;
+  transition: box-shadow 0.18s, transform 0.18s;
+}
+.card:hover { box-shadow: var(--shadow-lift); transform: translateY(-2px); }
+
+.card-visual {
+  aspect-ratio: 4 / 3; display: flex; align-items: center; justify-content: center;
+  position: relative; cursor: pointer;
+}
+.card-visual svg { width: 46%; height: 46%; }
+.card-visual .stock-tag {
+  position: absolute; top: 10px; inset-inline-start: 10px;
+  font-size: 0.68rem; font-family: var(--font-mono); padding: 3px 8px; border-radius: 3px;
+  background: rgba(255,255,255,0.9); color: var(--sage); font-weight: 700;
+}
+.card-visual .stock-tag.out { color: var(--rust); }
+
+.card-body { padding: 14px 14px 0; flex: 1; display: flex; flex-direction: column; gap: 6px; }
+.card-cat { font-size: 0.72rem; color: var(--muted); }
+.card-name {
+  font-size: 0.94rem; font-weight: 600; color: var(--charcoal); margin: 0;
+  cursor: pointer; line-height: 1.4;
+}
+.card-name:hover { color: var(--enamel); }
+.card-rating { font-size: 0.78rem; color: var(--brass); font-family: var(--font-mono); }
+.card-price { font-size: 1.05rem; font-weight: 800; color: var(--charcoal); margin-top: 2px; }
+.card-price small { font-size: 0.72rem; font-weight: 500; color: var(--muted); }
+
+.card-plate {
+  margin-top: 10px; padding: 9px 14px; background: var(--porcelain);
+  border-top: 1px dashed var(--border);
+  display: flex; justify-content: space-between; gap: 6px;
+  font-family: var(--font-mono); font-size: 0.68rem; color: var(--muted);
+}
+
+.card-actions { padding: 12px 14px 14px; }
+.add-btn {
+  width: 100%; padding: 9px; border-radius: var(--radius-sm); border: 1px solid var(--enamel);
+  background: transparent; color: var(--enamel); font-weight: 700; cursor: pointer; font-size: 0.86rem;
+  transition: background 0.15s, color 0.15s;
+}
+.add-btn:hover { background: var(--enamel); color: #fff; }
+.add-btn:disabled {
+  border-color: var(--border); color: var(--muted); cursor: not-allowed; background: var(--porcelain);
+}
+
+.empty-state {
+  max-width: 1200px; margin: 40px auto; padding: 0 20px; text-align: center; color: var(--muted);
+}
+
+/* ===== Footer ===== */
+.site-footer {
+  border-top: 1px solid var(--border); padding: 22px 20px; text-align: center;
+  color: var(--muted); font-size: 0.82rem; background: var(--panel);
+}
+
+/* ===== Cart drawer ===== */
+.cart-overlay, .modal-overlay {
+  position: fixed; inset: 0; background: rgba(35,38,43,0.45); z-index: 90;
+}
+.cart-drawer {
+  position: fixed; top: 0; bottom: 0; inset-inline-start: 0; width: min(380px, 92vw);
+  background: var(--panel); z-index: 91; display: flex; flex-direction: column;
+  box-shadow: var(--shadow-lift);
+  animation: slideIn 0.2s ease-out;
+}
+@keyframes slideIn { from { transform: translateX(var(--slide-from, -100%)); } to { transform: translateX(0); } }
+html[dir="rtl"] .cart-drawer { --slide-from: 100%; }
+
+.cart-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 16px 18px; border-bottom: 1px solid var(--border);
+}
+.icon-btn {
+  background: none; border: none; font-size: 1.1rem; cursor: pointer; color: var(--muted);
+  width: 32px; height: 32px; border-radius: var(--radius-sm);
+}
+.icon-btn:hover { background: var(--porcelain); color: var(--graphite); }
+
+.cart-items { flex: 1; overflow-y: auto; padding: 12px 18px; }
+.cart-item {
+  display: flex; gap: 10px; padding: 10px 0; border-bottom: 1px solid var(--border);
+  align-items: center;
+}
+.cart-item-icon { width: 40px; height: 40px; border-radius: var(--radius-sm); background: var(--porcelain); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.cart-item-icon svg { width: 60%; height: 60%; }
+.cart-item-info { flex: 1; min-width: 0; }
+.cart-item-name { font-size: 0.84rem; font-weight: 600; color: var(--charcoal); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.cart-item-price { font-size: 0.78rem; color: var(--muted); font-family: var(--font-mono); }
+.qty-controls { display: flex; align-items: center; gap: 6px; }
+.qty-controls button {
+  width: 24px; height: 24px; border-radius: var(--radius-sm); border: 1px solid var(--border);
+  background: var(--panel); cursor: pointer; font-family: var(--font-mono);
+}
+.qty-controls span { font-family: var(--font-mono); min-width: 18px; text-align: center; font-size: 0.85rem; }
+.cart-empty { color: var(--muted); text-align: center; padding: 40px 0; font-size: 0.9rem; }
+
+.cart-footer { padding: 16px 18px; border-top: 1px solid var(--border); }
+.cart-total-row { display: flex; justify-content: space-between; font-weight: 700; margin-bottom: 12px; }
+#cartTotal { font-family: var(--font-mono); color: var(--brass); }
+.checkout-btn {
+  width: 100%; padding: 12px; border-radius: var(--radius-sm); border: none;
+  background: var(--border); color: var(--muted); font-weight: 700; cursor: not-allowed; font-size: 0.92rem;
+}
+.cart-disclaimer { font-size: 0.72rem; color: var(--muted); text-align: center; margin: 8px 0 0; }
+
+/* ===== Product modal ===== */
+.product-modal {
+  position: fixed; top: 50%; inset-inline-start: 50%; transform: translate(-50%, -50%);
+  background: var(--panel); z-index: 91; border-radius: var(--radius-md);
+  width: min(560px, 92vw); max-height: 86vh; overflow-y: auto;
+  box-shadow: var(--shadow-lift);
+}
+html[dir="rtl"] .product-modal { transform: translate(50%, -50%); }
+.modal-close { position: absolute; top: 12px; inset-inline-end: 12px; z-index: 2; }
+.modal-visual {
+  aspect-ratio: 16/9; background: var(--porcelain); display: flex; align-items: center; justify-content: center;
+}
+.modal-visual svg { width: 34%; height: 34%; }
+.modal-content { padding: 24px; }
+.modal-content h2 { font-size: 1.2rem; margin-bottom: 4px; }
+.modal-cat { color: var(--muted); font-size: 0.85rem; margin-bottom: 14px; }
+.modal-price { font-size: 1.5rem; font-weight: 800; margin-bottom: 16px; }
+.modal-specs {
+  display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px 18px;
+  background: var(--porcelain); border: 1px dashed var(--border); border-radius: var(--radius-sm);
+  padding: 14px; margin-bottom: 18px;
+}
+.modal-specs dt { font-family: var(--font-mono); font-size: 0.65rem; color: var(--muted); letter-spacing: 1px; }
+.modal-specs dd { margin: 2px 0 0; font-family: var(--font-mono); font-size: 0.88rem; }
+
+@media (max-width: 640px) {
+  .topbar-inner { flex-wrap: wrap; }
+  .brand { order: 1; }
+  .cart-btn { order: 2; margin-inline-start: auto; }
+  .search-wrap { order: 3; flex-basis: 100%; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { animation: none !important; transition: none !important; }
+}
+
+</style>
 </head>
 <body>
 
@@ -38,14 +339,13 @@
         <span class="nameplate-eyebrow">MODEL</span>
         <h1>خانه‌کالا</h1>
       </div>
-      <p class="nameplate-tagline">یک ویترین دمو برای لوازم خانگی — طراحی‌شده مثل برچسب مشخصات روی خودِ دستگاه‌ها.</p>
+      <p class="nameplate-tagline">بهترین لوازم خانگی با کیفیت برتر و قیمت مناسب</p>
       <dl class="nameplate-specs">
-        <div><dt>TYPE</dt><dd>DEMO STOREFRONT</dd></div>
-        <div><dt>CATALOG</dt><dd id="specCount">120 ITEMS</dd></div>
+        <div><dt>TYPE</dt><dd>ONLINE STORE</dd></div>
+        <div><dt>CATALOG</dt><dd id="specCount">132 ITEMS</dd></div>
         <div><dt>VOLTAGE</dt><dd>220V ~ 50Hz</dd></div>
-        <div><dt>PAYMENT</dt><dd>NOT CONNECTED</dd></div>
+        <div><dt>WARRANTY</dt><dd>12-36 MONTHS</dd></div>
       </dl>
-      <p class="nameplate-note">این یک نمونهٔ نمایشی است؛ پرداخت واقعی و ثبت سفارش انجام نمی‌شود.</p>
     </div>
   </section>
 
@@ -63,22 +363,19 @@
   </section>
 
   <p id="resultsMeta" class="results-meta" role="status"></p>
-
   <section id="productGrid" class="grid" aria-label="محصولات"></section>
-
-  <p id="emptyState" class="empty-state" hidden>چیزی با این مشخصات پیدا نشد. فیلتر یا عبارت جستجو را تغییر دهید.</p>
+  <p id="emptyState" class="empty-state" hidden>چیزی پیدا نشد.</p>
 
 </main>
 
 <footer class="site-footer">
-  <p>این سایت یک دموی آموزشی است و روی GitHub Pages میزبانی می‌شود. هیچ پرداخت یا سفارش واقعی ثبت نمی‌شود.</p>
+  <p>خانه‌کالا — فروشگاه اینترنتی لوازم خانگی</p>
 </footer>
 
-<!-- Cart drawer -->
 <div id="cartOverlay" class="cart-overlay" hidden></div>
 <aside id="cartDrawer" class="cart-drawer" role="dialog" aria-modal="true" aria-labelledby="cartTitle" hidden>
   <div class="cart-header">
-    <h2 id="cartTitle">سبد خرید (دمو)</h2>
+    <h2 id="cartTitle">سبد خرید</h2>
     <button id="cartClose" class="icon-btn" aria-label="بستن سبد خرید">✕</button>
   </div>
   <div id="cartItems" class="cart-items"></div>
@@ -87,19 +384,2342 @@
       <span>جمع کل</span>
       <span id="cartTotal">۰ تومان</span>
     </div>
-    <button id="checkoutBtn" class="checkout-btn" disabled>ثبت سفارش (غیرفعال در دمو)</button>
-    <p class="cart-disclaimer">درگاه پرداخت وصل نیست — این دکمه فقط برای نمایش رابط کاربری است.</p>
+    <button id="checkoutBtn" class="checkout-btn" disabled>ثبت سفارش</button>
   </div>
 </aside>
 
-<!-- Product detail modal -->
 <div id="modalOverlay" class="modal-overlay" hidden></div>
 <div id="productModal" class="product-modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle" hidden>
   <button id="modalClose" class="icon-btn modal-close" aria-label="بستن">✕</button>
   <div id="modalBody"></div>
 </div>
 
-<script src="js/products.js"></script>
-<script src="js/app.js"></script>
+<script>
+// Demo catalog data — generated for the storefront demo. Not real inventory.
+const PRODUCTS = [
+  {
+    "id": 1,
+    "name": "پارس‌تک یخچال و فریزر دو قلو نوفراست",
+    "category": "fridge",
+    "categoryLabel": "یخچال و فریزر",
+    "icon": "fridge",
+    "brand": "پارس‌تک",
+    "model": "FR-1000",
+    "price": 43290000,
+    "power": 318,
+    "material": null,
+    "warranty": 12,
+    "inStock": true,
+    "rating": 3.6
+  },
+  {
+    "id": 2,
+    "name": "کیان‌الکتریک یخچال و فریزر ساید بای ساید",
+    "category": "fridge",
+    "categoryLabel": "یخچال و فریزر",
+    "icon": "fridge",
+    "brand": "کیان‌الکتریک",
+    "model": "FR-1007",
+    "price": 44300000,
+    "power": 343,
+    "material": null,
+    "warranty": 24,
+    "inStock": true,
+    "rating": 4.5
+  },
+  {
+    "id": 3,
+    "name": "نوین‌هوم یخچال و فریزر بالا پایین",
+    "category": "fridge",
+    "categoryLabel": "یخچال و فریزر",
+    "icon": "fridge",
+    "brand": "نوین‌هوم",
+    "model": "FR-1014",
+    "price": 45010000,
+    "power": 124,
+    "material": null,
+    "warranty": 18,
+    "inStock": true,
+    "rating": 4.4
+  },
+  {
+    "id": 4,
+    "name": "زرین لوازم یخچال و فریزر تک درب",
+    "category": "fridge",
+    "categoryLabel": "یخچال و فریزر",
+    "icon": "fridge",
+    "brand": "زرین لوازم",
+    "model": "FR-1021",
+    "price": 54350000,
+    "power": 419,
+    "material": null,
+    "warranty": 24,
+    "inStock": true,
+    "rating": 3.8
+  },
+  {
+    "id": 5,
+    "name": "آریانا هوم یخچال و فریزر فریزر ایستاده",
+    "category": "fridge",
+    "categoryLabel": "یخچال و فریزر",
+    "icon": "fridge",
+    "brand": "آریانا هوم",
+    "model": "FR-1028",
+    "price": 26100000,
+    "power": 184,
+    "material": null,
+    "warranty": 24,
+    "inStock": false,
+    "rating": 3.9
+  },
+  {
+    "id": 6,
+    "name": "دلتا خانه یخچال و فریزر دو قلو نوفراست",
+    "category": "fridge",
+    "categoryLabel": "یخچال و فریزر",
+    "icon": "fridge",
+    "brand": "دلتا خانه",
+    "model": "FR-1035",
+    "price": 21170000,
+    "power": 136,
+    "material": null,
+    "warranty": 12,
+    "inStock": true,
+    "rating": 4.4
+  },
+  {
+    "id": 7,
+    "name": "سپهر الکتریک یخچال و فریزر ساید بای ساید",
+    "category": "fridge",
+    "categoryLabel": "یخچال و فریزر",
+    "icon": "fridge",
+    "brand": "سپهر الکتریک",
+    "model": "FR-1042",
+    "price": 28430000,
+    "power": 315,
+    "material": null,
+    "warranty": 18,
+    "inStock": true,
+    "rating": 4.8
+  },
+  {
+    "id": 8,
+    "name": "بامو تک یخچال و فریزر بالا پایین",
+    "category": "fridge",
+    "categoryLabel": "یخچال و فریزر",
+    "icon": "fridge",
+    "brand": "بامو تک",
+    "model": "FR-1049",
+    "price": 61180000,
+    "power": 148,
+    "material": null,
+    "warranty": 18,
+    "inStock": true,
+    "rating": 4
+  },
+  {
+    "id": 9,
+    "name": "پارس‌تک یخچال و فریزر تک درب",
+    "category": "fridge",
+    "categoryLabel": "یخچال و فریزر",
+    "icon": "fridge",
+    "brand": "پارس‌تک",
+    "model": "FR-1056",
+    "price": 29370000,
+    "power": 236,
+    "material": null,
+    "warranty": 36,
+    "inStock": true,
+    "rating": 4.3
+  },
+  {
+    "id": 10,
+    "name": "کیان‌الکتریک یخچال و فریزر فریزر ایستاده",
+    "category": "fridge",
+    "categoryLabel": "یخچال و فریزر",
+    "icon": "fridge",
+    "brand": "کیان‌الکتریک",
+    "model": "FR-1063",
+    "price": 30580000,
+    "power": 286,
+    "material": null,
+    "warranty": 12,
+    "inStock": false,
+    "rating": 4
+  },
+  {
+    "id": 11,
+    "name": "نوین‌هوم یخچال و فریزر دو قلو نوفراست",
+    "category": "fridge",
+    "categoryLabel": "یخچال و فریزر",
+    "icon": "fridge",
+    "brand": "نوین‌هوم",
+    "model": "FR-1070",
+    "price": 38530000,
+    "power": 319,
+    "material": null,
+    "warranty": 36,
+    "inStock": true,
+    "rating": 3.5
+  },
+  {
+    "id": 12,
+    "name": "زرین لوازم یخچال و فریزر ساید بای ساید",
+    "category": "fridge",
+    "categoryLabel": "یخچال و فریزر",
+    "icon": "fridge",
+    "brand": "زرین لوازم",
+    "model": "FR-1077",
+    "price": 35590000,
+    "power": 120,
+    "material": null,
+    "warranty": 24,
+    "inStock": true,
+    "rating": 4.6
+  },
+  {
+    "id": 13,
+    "name": "آریانا هوم ماشین لباسشویی درب از جلو ۸ کیلویی",
+    "category": "washer",
+    "categoryLabel": "ماشین لباسشویی",
+    "icon": "washer",
+    "brand": "آریانا هوم",
+    "model": "WA-1084",
+    "price": 17570000,
+    "power": 2219,
+    "material": null,
+    "warranty": 36,
+    "inStock": false,
+    "rating": 3.7
+  },
+  {
+    "id": 14,
+    "name": "دلتا خانه ماشین لباسشویی درب از جلو ۹ کیلویی",
+    "category": "washer",
+    "categoryLabel": "ماشین لباسشویی",
+    "icon": "washer",
+    "brand": "دلتا خانه",
+    "model": "WA-1091",
+    "price": 13430000,
+    "power": 1894,
+    "material": null,
+    "warranty": 24,
+    "inStock": true,
+    "rating": 4.8
+  },
+  {
+    "id": 15,
+    "name": "سپهر الکتریک ماشین لباسشویی درب از بالا",
+    "category": "washer",
+    "categoryLabel": "ماشین لباسشویی",
+    "icon": "washer",
+    "brand": "سپهر الکتریک",
+    "model": "WA-1098",
+    "price": 28960000,
+    "power": 2178,
+    "material": null,
+    "warranty": 36,
+    "inStock": true,
+    "rating": 3.7
+  },
+  {
+    "id": 16,
+    "name": "بامو تک ماشین لباسشویی خشک‌کن دار",
+    "category": "washer",
+    "categoryLabel": "ماشین لباسشویی",
+    "icon": "washer",
+    "brand": "بامو تک",
+    "model": "WA-1105",
+    "price": 14450000,
+    "power": 1871,
+    "material": null,
+    "warranty": 36,
+    "inStock": true,
+    "rating": 3.8
+  },
+  {
+    "id": 17,
+    "name": "پارس‌تک ماشین لباسشویی کم مصرف A+++",
+    "category": "washer",
+    "categoryLabel": "ماشین لباسشویی",
+    "icon": "washer",
+    "brand": "پارس‌تک",
+    "model": "WA-1112",
+    "price": 22070000,
+    "power": 1958,
+    "material": null,
+    "warranty": 18,
+    "inStock": false,
+    "rating": 4
+  },
+  {
+    "id": 18,
+    "name": "کیان‌الکتریک ماشین لباسشویی درب از جلو ۸ کیلویی",
+    "category": "washer",
+    "categoryLabel": "ماشین لباسشویی",
+    "icon": "washer",
+    "brand": "کیان‌الکتریک",
+    "model": "WA-1119",
+    "price": 26390000,
+    "power": 2165,
+    "material": null,
+    "warranty": 18,
+    "inStock": true,
+    "rating": 3.9
+  },
+  {
+    "id": 19,
+    "name": "نوین‌هوم ماشین لباسشویی درب از جلو ۹ کیلویی",
+    "category": "washer",
+    "categoryLabel": "ماشین لباسشویی",
+    "icon": "washer",
+    "brand": "نوین‌هوم",
+    "model": "WA-1126",
+    "price": 29320000,
+    "power": 2171,
+    "material": null,
+    "warranty": 18,
+    "inStock": true,
+    "rating": 4.5
+  },
+  {
+    "id": 20,
+    "name": "زرین لوازم ماشین لباسشویی درب از بالا",
+    "category": "washer",
+    "categoryLabel": "ماشین لباسشویی",
+    "icon": "washer",
+    "brand": "زرین لوازم",
+    "model": "WA-1133",
+    "price": 12060000,
+    "power": 2194,
+    "material": null,
+    "warranty": 36,
+    "inStock": true,
+    "rating": 3.6
+  },
+  {
+    "id": 21,
+    "name": "آریانا هوم ماشین لباسشویی خشک‌کن دار",
+    "category": "washer",
+    "categoryLabel": "ماشین لباسشویی",
+    "icon": "washer",
+    "brand": "آریانا هوم",
+    "model": "WA-1140",
+    "price": 16900000,
+    "power": 2233,
+    "material": null,
+    "warranty": 12,
+    "inStock": true,
+    "rating": 3.7
+  },
+  {
+    "id": 22,
+    "name": "دلتا خانه ماشین لباسشویی کم مصرف A+++",
+    "category": "washer",
+    "categoryLabel": "ماشین لباسشویی",
+    "icon": "washer",
+    "brand": "دلتا خانه",
+    "model": "WA-1147",
+    "price": 18180000,
+    "power": 1849,
+    "material": null,
+    "warranty": 12,
+    "inStock": true,
+    "rating": 3.6
+  },
+  {
+    "id": 23,
+    "name": "سپهر الکتریک ماشین لباسشویی درب از جلو ۸ کیلویی",
+    "category": "washer",
+    "categoryLabel": "ماشین لباسشویی",
+    "icon": "washer",
+    "brand": "سپهر الکتریک",
+    "model": "WA-1154",
+    "price": 13240000,
+    "power": 2227,
+    "material": null,
+    "warranty": 24,
+    "inStock": true,
+    "rating": 4.4
+  },
+  {
+    "id": 24,
+    "name": "بامو تک ماشین لباسشویی درب از جلو ۹ کیلویی",
+    "category": "washer",
+    "categoryLabel": "ماشین لباسشویی",
+    "icon": "washer",
+    "brand": "بامو تک",
+    "model": "WA-1161",
+    "price": 30890000,
+    "power": 1902,
+    "material": null,
+    "warranty": 24,
+    "inStock": true,
+    "rating": 4.5
+  },
+  {
+    "id": 25,
+    "name": "پارس‌تک ماشین ظرفشویی ۱۲ نفره",
+    "category": "dishwasher",
+    "categoryLabel": "ماشین ظرفشویی",
+    "icon": "dishwasher",
+    "brand": "پارس‌تک",
+    "model": "DI-1168",
+    "price": 19480000,
+    "power": 1886,
+    "material": null,
+    "warranty": 24,
+    "inStock": true,
+    "rating": 4.4
+  },
+  {
+    "id": 26,
+    "name": "کیان‌الکتریک ماشین ظرفشویی ۱۴ نفره",
+    "category": "dishwasher",
+    "categoryLabel": "ماشین ظرفشویی",
+    "icon": "dishwasher",
+    "brand": "کیان‌الکتریک",
+    "model": "DI-1175",
+    "price": 25360000,
+    "power": 1605,
+    "material": null,
+    "warranty": 18,
+    "inStock": true,
+    "rating": 3.4
+  },
+  {
+    "id": 27,
+    "name": "نوین‌هوم ماشین ظرفشویی رومیزی",
+    "category": "dishwasher",
+    "categoryLabel": "ماشین ظرفشویی",
+    "icon": "dishwasher",
+    "brand": "نوین‌هوم",
+    "model": "DI-1182",
+    "price": 25520000,
+    "power": 1773,
+    "material": null,
+    "warranty": 12,
+    "inStock": true,
+    "rating": 3.7
+  },
+  {
+    "id": 28,
+    "name": "زرین لوازم ماشین ظرفشویی دیجیتال با نمایشگر",
+    "category": "dishwasher",
+    "categoryLabel": "ماشین ظرفشویی",
+    "icon": "dishwasher",
+    "brand": "زرین لوازم",
+    "model": "DI-1189",
+    "price": 26180000,
+    "power": 1765,
+    "material": null,
+    "warranty": 36,
+    "inStock": false,
+    "rating": 3.7
+  },
+  {
+    "id": 29,
+    "name": "آریانا هوم ماشین ظرفشویی بی‌صدا",
+    "category": "dishwasher",
+    "categoryLabel": "ماشین ظرفشویی",
+    "icon": "dishwasher",
+    "brand": "آریانا هوم",
+    "model": "DI-1196",
+    "price": 27280000,
+    "power": 1916,
+    "material": null,
+    "warranty": 12,
+    "inStock": false,
+    "rating": 3.4
+  },
+  {
+    "id": 30,
+    "name": "دلتا خانه ماشین ظرفشویی ۱۲ نفره",
+    "category": "dishwasher",
+    "categoryLabel": "ماشین ظرفشویی",
+    "icon": "dishwasher",
+    "brand": "دلتا خانه",
+    "model": "DI-1203",
+    "price": 16400000,
+    "power": 1862,
+    "material": null,
+    "warranty": 36,
+    "inStock": true,
+    "rating": 4.5
+  },
+  {
+    "id": 31,
+    "name": "سپهر الکتریک ماشین ظرفشویی ۱۴ نفره",
+    "category": "dishwasher",
+    "categoryLabel": "ماشین ظرفشویی",
+    "icon": "dishwasher",
+    "brand": "سپهر الکتریک",
+    "model": "DI-1210",
+    "price": 27120000,
+    "power": 1845,
+    "material": null,
+    "warranty": 12,
+    "inStock": true,
+    "rating": 4.4
+  },
+  {
+    "id": 32,
+    "name": "بامو تک ماشین ظرفشویی رومیزی",
+    "category": "dishwasher",
+    "categoryLabel": "ماشین ظرفشویی",
+    "icon": "dishwasher",
+    "brand": "بامو تک",
+    "model": "DI-1217",
+    "price": 17900000,
+    "power": 1809,
+    "material": null,
+    "warranty": 18,
+    "inStock": true,
+    "rating": 3.5
+  },
+  {
+    "id": 33,
+    "name": "پارس‌تک ماشین ظرفشویی دیجیتال با نمایشگر",
+    "category": "dishwasher",
+    "categoryLabel": "ماشین ظرفشویی",
+    "icon": "dishwasher",
+    "brand": "پارس‌تک",
+    "model": "DI-1224",
+    "price": 16280000,
+    "power": 1739,
+    "material": null,
+    "warranty": 24,
+    "inStock": true,
+    "rating": 4.6
+  },
+  {
+    "id": 34,
+    "name": "کیان‌الکتریک ماشین ظرفشویی بی‌صدا",
+    "category": "dishwasher",
+    "categoryLabel": "ماشین ظرفشویی",
+    "icon": "dishwasher",
+    "brand": "کیان‌الکتریک",
+    "model": "DI-1231",
+    "price": 24950000,
+    "power": 2016,
+    "material": null,
+    "warranty": 12,
+    "inStock": true,
+    "rating": 3.8
+  },
+  {
+    "id": 35,
+    "name": "نوین‌هوم ماشین ظرفشویی ۱۲ نفره",
+    "category": "dishwasher",
+    "categoryLabel": "ماشین ظرفشویی",
+    "icon": "dishwasher",
+    "brand": "نوین‌هوم",
+    "model": "DI-1238",
+    "price": 30530000,
+    "power": 1627,
+    "material": null,
+    "warranty": 36,
+    "inStock": true,
+    "rating": 4.5
+  },
+  {
+    "id": 36,
+    "name": "زرین لوازم ماشین ظرفشویی ۱۴ نفره",
+    "category": "dishwasher",
+    "categoryLabel": "ماشین ظرفشویی",
+    "icon": "dishwasher",
+    "brand": "زرین لوازم",
+    "model": "DI-1245",
+    "price": 26040000,
+    "power": 1958,
+    "material": null,
+    "warranty": 12,
+    "inStock": false,
+    "rating": 3.6
+  },
+  {
+    "id": 37,
+    "name": "آریانا هوم اجاق گاز و هود ۵ شعله فردار",
+    "category": "stove",
+    "categoryLabel": "اجاق گاز و هود",
+    "icon": "stove",
+    "brand": "آریانا هوم",
+    "model": "ST-1252",
+    "price": 17380000,
+    "power": 135,
+    "material": null,
+    "warranty": 12,
+    "inStock": true,
+    "rating": 4.5
+  },
+  {
+    "id": 38,
+    "name": "دلتا خانه اجاق گاز و هود شیشه‌ای رومیزی",
+    "category": "stove",
+    "categoryLabel": "اجاق گاز و هود",
+    "icon": "stove",
+    "brand": "دلتا خانه",
+    "model": "ST-1259",
+    "price": 15470000,
+    "power": 130,
+    "material": null,
+    "warranty": 12,
+    "inStock": false,
+    "rating": 3.6
+  },
+  {
+    "id": 39,
+    "name": "سپهر الکتریک اجاق گاز و هود توکار",
+    "category": "stove",
+    "categoryLabel": "اجاق گاز و هود",
+    "icon": "stove",
+    "brand": "سپهر الکتریک",
+    "model": "ST-1266",
+    "price": 14850000,
+    "power": 141,
+    "material": null,
+    "warranty": 24,
+    "inStock": true,
+    "rating": 3.5
+  },
+  {
+    "id": 40,
+    "name": "بامو تک اجاق گاز و هود هود مخفی",
+    "category": "stove",
+    "categoryLabel": "اجاق گاز و هود",
+    "icon": "stove",
+    "brand": "بامو تک",
+    "model": "ST-1273",
+    "price": 13550000,
+    "power": 137,
+    "material": null,
+    "warranty": 24,
+    "inStock": true,
+    "rating": 4.3
+  },
+  {
+    "id": 41,
+    "name": "پارس‌تک اجاق گاز و هود هود شومینه‌ای",
+    "category": "stove",
+    "categoryLabel": "اجاق گاز و هود",
+    "icon": "stove",
+    "brand": "پارس‌تک",
+    "model": "ST-1280",
+    "price": 11030000,
+    "power": 120,
+    "material": null,
+    "warranty": 24,
+    "inStock": true,
+    "rating": 4.8
+  },
+  {
+    "id": 42,
+    "name": "کیان‌الکتریک اجاق گاز و هود ۵ شعله فردار",
+    "category": "stove",
+    "categoryLabel": "اجاق گاز و هود",
+    "icon": "stove",
+    "brand": "کیان‌الکتریک",
+    "model": "ST-1287",
+    "price": 21000000,
+    "power": 125,
+    "material": null,
+    "warranty": 12,
+    "inStock": true,
+    "rating": 4.4
+  },
+  {
+    "id": 43,
+    "name": "نوین‌هوم اجاق گاز و هود شیشه‌ای رومیزی",
+    "category": "stove",
+    "categoryLabel": "اجاق گاز و هود",
+    "icon": "stove",
+    "brand": "نوین‌هوم",
+    "model": "ST-1294",
+    "price": 6980000,
+    "power": 198,
+    "material": null,
+    "warranty": 36,
+    "inStock": true,
+    "rating": 3.9
+  },
+  {
+    "id": 44,
+    "name": "زرین لوازم اجاق گاز و هود توکار",
+    "category": "stove",
+    "categoryLabel": "اجاق گاز و هود",
+    "icon": "stove",
+    "brand": "زرین لوازم",
+    "model": "ST-1301",
+    "price": 18910000,
+    "power": 200,
+    "material": null,
+    "warranty": 36,
+    "inStock": true,
+    "rating": 3.6
+  },
+  {
+    "id": 45,
+    "name": "آریانا هوم اجاق گاز و هود هود مخفی",
+    "category": "stove",
+    "categoryLabel": "اجاق گاز و هود",
+    "icon": "stove",
+    "brand": "آریانا هوم",
+    "model": "ST-1308",
+    "price": 15100000,
+    "power": 181,
+    "material": null,
+    "warranty": 24,
+    "inStock": true,
+    "rating": 3.7
+  },
+  {
+    "id": 46,
+    "name": "دلتا خانه اجاق گاز و هود هود شومینه‌ای",
+    "category": "stove",
+    "categoryLabel": "اجاق گاز و هود",
+    "icon": "stove",
+    "brand": "دلتا خانه",
+    "model": "ST-1315",
+    "price": 22720000,
+    "power": 164,
+    "material": null,
+    "warranty": 24,
+    "inStock": true,
+    "rating": 3.5
+  },
+  {
+    "id": 47,
+    "name": "سپهر الکتریک اجاق گاز و هود ۵ شعله فردار",
+    "category": "stove",
+    "categoryLabel": "اجاق گاز و هود",
+    "icon": "stove",
+    "brand": "سپهر الکتریک",
+    "model": "ST-1322",
+    "price": 6750000,
+    "power": 179,
+    "material": null,
+    "warranty": 24,
+    "inStock": true,
+    "rating": 4.1
+  },
+  {
+    "id": 48,
+    "name": "بامو تک اجاق گاز و هود شیشه‌ای رومیزی",
+    "category": "stove",
+    "categoryLabel": "اجاق گاز و هود",
+    "icon": "stove",
+    "brand": "بامو تک",
+    "model": "ST-1329",
+    "price": 10130000,
+    "power": 219,
+    "material": null,
+    "warranty": 36,
+    "inStock": false,
+    "rating": 4.5
+  },
+  {
+    "id": 49,
+    "name": "پارس‌تک مایکروویو توام با گریل",
+    "category": "microwave",
+    "categoryLabel": "مایکروویو",
+    "icon": "microwave",
+    "brand": "پارس‌تک",
+    "model": "MI-1336",
+    "price": 7720000,
+    "power": 1198,
+    "material": null,
+    "warranty": 36,
+    "inStock": true,
+    "rating": 3.4
+  },
+  {
+    "id": 50,
+    "name": "کیان‌الکتریک مایکروویو دیجیتال",
+    "category": "microwave",
+    "categoryLabel": "مایکروویو",
+    "icon": "microwave",
+    "brand": "کیان‌الکتریک",
+    "model": "MI-1343",
+    "price": 7990000,
+    "power": 1125,
+    "material": null,
+    "warranty": 18,
+    "inStock": true,
+    "rating": 4.5
+  },
+  {
+    "id": 51,
+    "name": "نوین‌هوم مایکروویو رومیزی ساده",
+    "category": "microwave",
+    "categoryLabel": "مایکروویو",
+    "icon": "microwave",
+    "brand": "نوین‌هوم",
+    "model": "MI-1350",
+    "price": 11860000,
+    "power": 1247,
+    "material": null,
+    "warranty": 24,
+    "inStock": true,
+    "rating": 4.2
+  },
+  {
+    "id": 52,
+    "name": "زرین لوازم مایکروویو توکار",
+    "category": "microwave",
+    "categoryLabel": "مایکروویو",
+    "icon": "microwave",
+    "brand": "زرین لوازم",
+    "model": "MI-1357",
+    "price": 11950000,
+    "power": 803,
+    "material": null,
+    "warranty": 12,
+    "inStock": true,
+    "rating": 4.8
+  },
+  {
+    "id": 53,
+    "name": "آریانا هوم مایکروویو با فر همرفتی",
+    "category": "microwave",
+    "categoryLabel": "مایکروویو",
+    "icon": "microwave",
+    "brand": "آریانا هوم",
+    "model": "MI-1364",
+    "price": 10950000,
+    "power": 839,
+    "material": null,
+    "warranty": 36,
+    "inStock": true,
+    "rating": 3.4
+  },
+  {
+    "id": 54,
+    "name": "دلتا خانه مایکروویو توام با گریل",
+    "category": "microwave",
+    "categoryLabel": "مایکروویو",
+    "icon": "microwave",
+    "brand": "دلتا خانه",
+    "model": "MI-1371",
+    "price": 10070000,
+    "power": 1044,
+    "material": null,
+    "warranty": 24,
+    "inStock": true,
+    "rating": 3.7
+  },
+  {
+    "id": 55,
+    "name": "سپهر الکتریک مایکروویو دیجیتال",
+    "category": "microwave",
+    "categoryLabel": "مایکروویو",
+    "icon": "microwave",
+    "brand": "سپهر الکتریک",
+    "model": "MI-1378",
+    "price": 10840000,
+    "power": 1342,
+    "material": null,
+    "warranty": 18,
+    "inStock": true,
+    "rating": 3.8
+  },
+  {
+    "id": 56,
+    "name": "بامو تک مایکروویو رومیزی ساده",
+    "category": "microwave",
+    "categoryLabel": "مایکروویو",
+    "icon": "microwave",
+    "brand": "بامو تک",
+    "model": "MI-1385",
+    "price": 12960000,
+    "power": 930,
+    "material": null,
+    "warranty": 18,
+    "inStock": false,
+    "rating": 4.6
+  },
+  {
+    "id": 57,
+    "name": "پارس‌تک مایکروویو توکار",
+    "category": "microwave",
+    "categoryLabel": "مایکروویو",
+    "icon": "microwave",
+    "brand": "پارس‌تک",
+    "model": "MI-1392",
+    "price": 9760000,
+    "power": 1008,
+    "material": null,
+    "warranty": 18,
+    "inStock": true,
+    "rating": 4.1
+  },
+  {
+    "id": 58,
+    "name": "کیان‌الکتریک مایکروویو با فر همرفتی",
+    "category": "microwave",
+    "categoryLabel": "مایکروویو",
+    "icon": "microwave",
+    "brand": "کیان‌الکتریک",
+    "model": "MI-1399",
+    "price": 5960000,
+    "power": 872,
+    "material": null,
+    "warranty": 36,
+    "inStock": true,
+    "rating": 4.9
+  },
+  {
+    "id": 59,
+    "name": "نوین‌هوم مایکروویو توام با گریل",
+    "category": "microwave",
+    "categoryLabel": "مایکروویو",
+    "icon": "microwave",
+    "brand": "نوین‌هوم",
+    "model": "MI-1406",
+    "price": 5720000,
+    "power": 908,
+    "material": null,
+    "warranty": 36,
+    "inStock": true,
+    "rating": 4.4
+  },
+  {
+    "id": 60,
+    "name": "زرین لوازم مایکروویو دیجیتال",
+    "category": "microwave",
+    "categoryLabel": "مایکروویو",
+    "icon": "microwave",
+    "brand": "زرین لوازم",
+    "model": "MI-1413",
+    "price": 11680000,
+    "power": 1145,
+    "material": null,
+    "warranty": 36,
+    "inStock": true,
+    "rating": 4.1
+  },
+  {
+    "id": 61,
+    "name": "آریانا هوم جاروبرقی رباتیک",
+    "category": "vacuum",
+    "categoryLabel": "جاروبرقی",
+    "icon": "vacuum",
+    "brand": "آریانا هوم",
+    "model": "VA-1420",
+    "price": 3380000,
+    "power": 850,
+    "material": null,
+    "warranty": 12,
+    "inStock": true,
+    "rating": 4.5
+  },
+  {
+    "id": 62,
+    "name": "دلتا خانه جاروبرقی بدون کیسه",
+    "category": "vacuum",
+    "categoryLabel": "جاروبرقی",
+    "icon": "vacuum",
+    "brand": "دلتا خانه",
+    "model": "VA-1427",
+    "price": 8000000,
+    "power": 1562,
+    "material": null,
+    "warranty": 12,
+    "inStock": true,
+    "rating": 4.9
+  },
+  {
+    "id": 63,
+    "name": "سپهر الکتریک جاروبرقی عمودی شارژی",
+    "category": "vacuum",
+    "categoryLabel": "جاروبرقی",
+    "icon": "vacuum",
+    "brand": "سپهر الکتریک",
+    "model": "VA-1434",
+    "price": 14700000,
+    "power": 853,
+    "material": null,
+    "warranty": 18,
+    "inStock": true,
+    "rating": 4.3
+  },
+  {
+    "id": 64,
+    "name": "بامو تک جاروبرقی سطلی",
+    "category": "vacuum",
+    "categoryLabel": "جاروبرقی",
+    "icon": "vacuum",
+    "brand": "بامو تک",
+    "model": "VA-1441",
+    "price": 5430000,
+    "power": 525,
+    "material": null,
+    "warranty": 24,
+    "inStock": true,
+    "rating": 3.6
+  },
+  {
+    "id": 65,
+    "name": "پارس‌تک جاروبرقی دستی شارژی",
+    "category": "vacuum",
+    "categoryLabel": "جاروبرقی",
+    "icon": "vacuum",
+    "brand": "پارس‌تک",
+    "model": "VA-1448",
+    "price": 7190000,
+    "power": 542,
+    "material": null,
+    "warranty": 24,
+    "inStock": true,
+    "rating": 3.6
+  },
+  {
+    "id": 66,
+    "name": "کیان‌الکتریک جاروبرقی رباتیک",
+    "category": "vacuum",
+    "categoryLabel": "جاروبرقی",
+    "icon": "vacuum",
+    "brand": "کیان‌الکتریک",
+    "model": "VA-1455",
+    "price": 4140000,
+    "power": 930,
+    "material": null,
+    "warranty": 18,
+    "inStock": true,
+    "rating": 4.7
+  },
+  {
+    "id": 67,
+    "name": "نوین‌هوم جاروبرقی بدون کیسه",
+    "category": "vacuum",
+    "categoryLabel": "جاروبرقی",
+    "icon": "vacuum",
+    "brand": "نوین‌هوم",
+    "model": "VA-1462",
+    "price": 4940000,
+    "power": 1362,
+    "material": null,
+    "warranty": 18,
+    "inStock": true,
+    "rating": 4.9
+  },
+  {
+    "id": 68,
+    "name": "زرین لوازم جاروبرقی عمودی شارژی",
+    "category": "vacuum",
+    "categoryLabel": "جاروبرقی",
+    "icon": "vacuum",
+    "brand": "زرین لوازم",
+    "model": "VA-1469",
+    "price": 10280000,
+    "power": 471,
+    "material": null,
+    "warranty": 18,
+    "inStock": false,
+    "rating": 4.9
+  },
+  {
+    "id": 69,
+    "name": "آریانا هوم جاروبرقی سطلی",
+    "category": "vacuum",
+    "categoryLabel": "جاروبرقی",
+    "icon": "vacuum",
+    "brand": "آریانا هوم",
+    "model": "VA-1476",
+    "price": 9420000,
+    "power": 1429,
+    "material": null,
+    "warranty": 12,
+    "inStock": true,
+    "rating": 3.4
+  },
+  {
+    "id": 70,
+    "name": "دلتا خانه جاروبرقی دستی شارژی",
+    "category": "vacuum",
+    "categoryLabel": "جاروبرقی",
+    "icon": "vacuum",
+    "brand": "دلتا خانه",
+    "model": "VA-1483",
+    "price": 11850000,
+    "power": 1669,
+    "material": null,
+    "warranty": 36,
+    "inStock": true,
+    "rating": 4
+  },
+  {
+    "id": 71,
+    "name": "سپهر الکتریک جاروبرقی رباتیک",
+    "category": "vacuum",
+    "categoryLabel": "جاروبرقی",
+    "icon": "vacuum",
+    "brand": "سپهر الکتریک",
+    "model": "VA-1490",
+    "price": 10250000,
+    "power": 683,
+    "material": null,
+    "warranty": 18,
+    "inStock": true,
+    "rating": 4.6
+  },
+  {
+    "id": 72,
+    "name": "بامو تک جاروبرقی بدون کیسه",
+    "category": "vacuum",
+    "categoryLabel": "جاروبرقی",
+    "icon": "vacuum",
+    "brand": "بامو تک",
+    "model": "VA-1497",
+    "price": 3480000,
+    "power": 648,
+    "material": null,
+    "warranty": 12,
+    "inStock": true,
+    "rating": 4.9
+  },
+  {
+    "id": 73,
+    "name": "پارس‌تک کولر و پنکه آبی پرتابل",
+    "category": "fan",
+    "categoryLabel": "کولر و پنکه",
+    "icon": "fan",
+    "brand": "پارس‌تک",
+    "model": "FA-1504",
+    "price": 3600000,
+    "power": 410,
+    "material": null,
+    "warranty": 18,
+    "inStock": true,
+    "rating": 3.6
+  },
+  {
+    "id": 74,
+    "name": "کیان‌الکتریک کولر و پنکه گازی اسپیلت",
+    "category": "fan",
+    "categoryLabel": "کولر و پنکه",
+    "icon": "fan",
+    "brand": "کیان‌الکتریک",
+    "model": "FA-1511",
+    "price": 8490000,
+    "power": 815,
+    "material": null,
+    "warranty": 36,
+    "inStock": true,
+    "rating": 4.3
+  },
+  {
+    "id": 75,
+    "name": "نوین‌هوم کولر و پنکه ایستاده",
+    "category": "fan",
+    "categoryLabel": "کولر و پنکه",
+    "icon": "fan",
+    "brand": "نوین‌هوم",
+    "model": "FA-1518",
+    "price": 13950000,
+    "power": 454,
+    "material": null,
+    "warranty": 24,
+    "inStock": true,
+    "rating": 4.2
+  },
+  {
+    "id": 76,
+    "name": "زرین لوازم کولر و پنکه سقفی",
+    "category": "fan",
+    "categoryLabel": "کولر و پنکه",
+    "icon": "fan",
+    "brand": "زرین لوازم",
+    "model": "FA-1525",
+    "price": 2700000,
+    "power": 279,
+    "material": null,
+    "warranty": 18,
+    "inStock": false,
+    "rating": 4.5
+  },
+  {
+    "id": 77,
+    "name": "آریانا هوم کولر و پنکه تصفیه هوای همراه",
+    "category": "fan",
+    "categoryLabel": "کولر و پنکه",
+    "icon": "fan",
+    "brand": "آریانا هوم",
+    "model": "FA-1532",
+    "price": 14800000,
+    "power": 484,
+    "material": null,
+    "warranty": 18,
+    "inStock": true,
+    "rating": 4.3
+  },
+  {
+    "id": 78,
+    "name": "دلتا خانه کولر و پنکه آبی پرتابل",
+    "category": "fan",
+    "categoryLabel": "کولر و پنکه",
+    "icon": "fan",
+    "brand": "دلتا خانه",
+    "model": "FA-1539",
+    "price": 17820000,
+    "power": 440,
+    "material": null,
+    "warranty": 36,
+    "inStock": true,
+    "rating": 3.5
+  },
+  {
+    "id": 79,
+    "name": "سپهر الکتریک کولر و پنکه گازی اسپیلت",
+    "category": "fan",
+    "categoryLabel": "کولر و پنکه",
+    "icon": "fan",
+    "brand": "سپهر الکتریک",
+    "model": "FA-1546",
+    "price": 5380000,
+    "power": 652,
+    "material": null,
+    "warranty": 24,
+    "inStock": false,
+    "rating": 4.2
+  },
+  {
+    "id": 80,
+    "name": "بامو تک کولر و پنکه ایستاده",
+    "category": "fan",
+    "categoryLabel": "کولر و پنکه",
+    "icon": "fan",
+    "brand": "بامو تک",
+    "model": "FA-1553",
+    "price": 4930000,
+    "power": 76,
+    "material": null,
+    "warranty": 36,
+    "inStock": true,
+    "rating": 3.6
+  },
+  {
+    "id": 81,
+    "name": "پارس‌تک کولر و پنکه سقفی",
+    "category": "fan",
+    "categoryLabel": "کولر و پنکه",
+    "icon": "fan",
+    "brand": "پارس‌تک",
+    "model": "FA-1560",
+    "price": 20710000,
+    "power": 844,
+    "material": null,
+    "warranty": 24,
+    "inStock": false,
+    "rating": 3.5
+  },
+  {
+    "id": 82,
+    "name": "کیان‌الکتریک کولر و پنکه تصفیه هوای همراه",
+    "category": "fan",
+    "categoryLabel": "کولر و پنکه",
+    "icon": "fan",
+    "brand": "کیان‌الکتریک",
+    "model": "FA-1567",
+    "price": 4020000,
+    "power": 389,
+    "material": null,
+    "warranty": 12,
+    "inStock": true,
+    "rating": 4.5
+  },
+  {
+    "id": 83,
+    "name": "نوین‌هوم کولر و پنکه آبی پرتابل",
+    "category": "fan",
+    "categoryLabel": "کولر و پنکه",
+    "icon": "fan",
+    "brand": "نوین‌هوم",
+    "model": "FA-1574",
+    "price": 2170000,
+    "power": 563,
+    "material": null,
+    "warranty": 12,
+    "inStock": true,
+    "rating": 4.1
+  },
+  {
+    "id": 84,
+    "name": "زرین لوازم کولر و پنکه گازی اسپیلت",
+    "category": "fan",
+    "categoryLabel": "کولر و پنکه",
+    "icon": "fan",
+    "brand": "زرین لوازم",
+    "model": "FA-1581",
+    "price": 10130000,
+    "power": 381,
+    "material": null,
+    "warranty": 12,
+    "inStock": true,
+    "rating": 4.1
+  },
+  {
+    "id": 85,
+    "name": "آریانا هوم اتو و بخارشو بخار عمودی",
+    "category": "iron",
+    "categoryLabel": "اتو و بخارشو",
+    "icon": "iron",
+    "brand": "آریانا هوم",
+    "model": "IR-1588",
+    "price": 3700000,
+    "power": 2390,
+    "material": null,
+    "warranty": 12,
+    "inStock": true,
+    "rating": 3.6
+  },
+  {
+    "id": 86,
+    "name": "دلتا خانه اتو و بخارشو شارژی بی‌سیم",
+    "category": "iron",
+    "categoryLabel": "اتو و بخارشو",
+    "icon": "iron",
+    "brand": "دلتا خانه",
+    "model": "IR-1595",
+    "price": 3400000,
+    "power": 2449,
+    "material": null,
+    "warranty": 18,
+    "inStock": true,
+    "rating": 3.6
+  },
+  {
+    "id": 87,
+    "name": "سپهر الکتریک اتو و بخارشو مسافرتی",
+    "category": "iron",
+    "categoryLabel": "اتو و بخارشو",
+    "icon": "iron",
+    "brand": "سپهر الکتریک",
+    "model": "IR-1602",
+    "price": 4830000,
+    "power": 1657,
+    "material": null,
+    "warranty": 36,
+    "inStock": true,
+    "rating": 4.8
+  },
+  {
+    "id": 88,
+    "name": "بامو تک اتو و بخارشو با مخزن آب بزرگ",
+    "category": "iron",
+    "categoryLabel": "اتو و بخارشو",
+    "icon": "iron",
+    "brand": "بامو تک",
+    "model": "IR-1609",
+    "price": 940000,
+    "power": 1480,
+    "material": null,
+    "warranty": 36,
+    "inStock": true,
+    "rating": 3.5
+  },
+  {
+    "id": 89,
+    "name": "پارس‌تک اتو و بخارشو حرفه‌ای خیاطی",
+    "category": "iron",
+    "categoryLabel": "اتو و بخارشو",
+    "icon": "iron",
+    "brand": "پارس‌تک",
+    "model": "IR-1616",
+    "price": 6130000,
+    "power": 2186,
+    "material": null,
+    "warranty": 18,
+    "inStock": false,
+    "rating": 3.4
+  },
+  {
+    "id": 90,
+    "name": "کیان‌الکتریک اتو و بخارشو بخار عمودی",
+    "category": "iron",
+    "categoryLabel": "اتو و بخارشو",
+    "icon": "iron",
+    "brand": "کیان‌الکتریک",
+    "model": "IR-1623",
+    "price": 3060000,
+    "power": 2077,
+    "material": null,
+    "warranty": 36,
+    "inStock": false,
+    "rating": 4
+  },
+  {
+    "id": 91,
+    "name": "نوین‌هوم اتو و بخارشو شارژی بی‌سیم",
+    "category": "iron",
+    "categoryLabel": "اتو و بخارشو",
+    "icon": "iron",
+    "brand": "نوین‌هوم",
+    "model": "IR-1630",
+    "price": 4230000,
+    "power": 1277,
+    "material": null,
+    "warranty": 12,
+    "inStock": false,
+    "rating": 4.9
+  },
+  {
+    "id": 92,
+    "name": "زرین لوازم اتو و بخارشو مسافرتی",
+    "category": "iron",
+    "categoryLabel": "اتو و بخارشو",
+    "icon": "iron",
+    "brand": "زرین لوازم",
+    "model": "IR-1637",
+    "price": 3000000,
+    "power": 2075,
+    "material": null,
+    "warranty": 18,
+    "inStock": true,
+    "rating": 3.8
+  },
+  {
+    "id": 93,
+    "name": "آریانا هوم اتو و بخارشو با مخزن آب بزرگ",
+    "category": "iron",
+    "categoryLabel": "اتو و بخارشو",
+    "icon": "iron",
+    "brand": "آریانا هوم",
+    "model": "IR-1644",
+    "price": 4910000,
+    "power": 1751,
+    "material": null,
+    "warranty": 18,
+    "inStock": true,
+    "rating": 3.6
+  },
+  {
+    "id": 94,
+    "name": "دلتا خانه اتو و بخارشو حرفه‌ای خیاطی",
+    "category": "iron",
+    "categoryLabel": "اتو و بخارشو",
+    "icon": "iron",
+    "brand": "دلتا خانه",
+    "model": "IR-1651",
+    "price": 4870000,
+    "power": 1262,
+    "material": null,
+    "warranty": 36,
+    "inStock": false,
+    "rating": 4.7
+  },
+  {
+    "id": 95,
+    "name": "سپهر الکتریک اتو و بخارشو بخار عمودی",
+    "category": "iron",
+    "categoryLabel": "اتو و بخارشو",
+    "icon": "iron",
+    "brand": "سپهر الکتریک",
+    "model": "IR-1658",
+    "price": 1650000,
+    "power": 2525,
+    "material": null,
+    "warranty": 36,
+    "inStock": false,
+    "rating": 4.5
+  },
+  {
+    "id": 96,
+    "name": "بامو تک اتو و بخارشو شارژی بی‌سیم",
+    "category": "iron",
+    "categoryLabel": "اتو و بخارشو",
+    "icon": "iron",
+    "brand": "بامو تک",
+    "model": "IR-1665",
+    "price": 2930000,
+    "power": 1707,
+    "material": null,
+    "warranty": 36,
+    "inStock": true,
+    "rating": 3.8
+  },
+  {
+    "id": 97,
+    "name": "پارس‌تک لوازم آشپزخانه برقی توستر نان",
+    "category": "kitchenette",
+    "categoryLabel": "لوازم آشپزخانه برقی",
+    "icon": "kitchen",
+    "brand": "پارس‌تک",
+    "model": "KI-1672",
+    "price": 6550000,
+    "power": 388,
+    "material": null,
+    "warranty": 12,
+    "inStock": true,
+    "rating": 4.3
+  },
+  {
+    "id": 98,
+    "name": "کیان‌الکتریک لوازم آشپزخانه برقی چای‌ساز",
+    "category": "kitchenette",
+    "categoryLabel": "لوازم آشپزخانه برقی",
+    "icon": "kitchen",
+    "brand": "کیان‌الکتریک",
+    "model": "KI-1679",
+    "price": 5900000,
+    "power": 649,
+    "material": null,
+    "warranty": 24,
+    "inStock": false,
+    "rating": 4
+  },
+  {
+    "id": 99,
+    "name": "نوین‌هوم لوازم آشپزخانه برقی آبمیوه‌گیری",
+    "category": "kitchenette",
+    "categoryLabel": "لوازم آشپزخانه برقی",
+    "icon": "kitchen",
+    "brand": "نوین‌هوم",
+    "model": "KI-1686",
+    "price": 1160000,
+    "power": 1558,
+    "material": null,
+    "warranty": 18,
+    "inStock": true,
+    "rating": 4.5
+  },
+  {
+    "id": 100,
+    "name": "زرین لوازم لوازم آشپزخانه برقی همزن آشپزخانه",
+    "category": "kitchenette",
+    "categoryLabel": "لوازم آشپزخانه برقی",
+    "icon": "kitchen",
+    "brand": "زرین لوازم",
+    "model": "KI-1693",
+    "price": 5890000,
+    "power": 1087,
+    "material": null,
+    "warranty": 18,
+    "inStock": true,
+    "rating": 4.5
+  },
+  {
+    "id": 101,
+    "name": "آریانا هوم لوازم آشپزخانه برقی قهوه‌ساز",
+    "category": "kitchenette",
+    "categoryLabel": "لوازم آشپزخانه برقی",
+    "icon": "kitchen",
+    "brand": "آریانا هوم",
+    "model": "KI-1700",
+    "price": 3970000,
+    "power": 664,
+    "material": null,
+    "warranty": 24,
+    "inStock": true,
+    "rating": 3.6
+  },
+  {
+    "id": 102,
+    "name": "دلتا خانه لوازم آشپزخانه برقی توستر نان",
+    "category": "kitchenette",
+    "categoryLabel": "لوازم آشپزخانه برقی",
+    "icon": "kitchen",
+    "brand": "دلتا خانه",
+    "model": "KI-1707",
+    "price": 1070000,
+    "power": 1709,
+    "material": null,
+    "warranty": 18,
+    "inStock": true,
+    "rating": 3.9
+  },
+  {
+    "id": 103,
+    "name": "سپهر الکتریک لوازم آشپزخانه برقی چای‌ساز",
+    "category": "kitchenette",
+    "categoryLabel": "لوازم آشپزخانه برقی",
+    "icon": "kitchen",
+    "brand": "سپهر الکتریک",
+    "model": "KI-1714",
+    "price": 8560000,
+    "power": 1345,
+    "material": null,
+    "warranty": 18,
+    "inStock": true,
+    "rating": 4.7
+  },
+  {
+    "id": 104,
+    "name": "بامو تک لوازم آشپزخانه برقی آبمیوه‌گیری",
+    "category": "kitchenette",
+    "categoryLabel": "لوازم آشپزخانه برقی",
+    "icon": "kitchen",
+    "brand": "بامو تک",
+    "model": "KI-1721",
+    "price": 3710000,
+    "power": 859,
+    "material": null,
+    "warranty": 24,
+    "inStock": true,
+    "rating": 4
+  },
+  {
+    "id": 105,
+    "name": "پارس‌تک لوازم آشپزخانه برقی همزن آشپزخانه",
+    "category": "kitchenette",
+    "categoryLabel": "لوازم آشپزخانه برقی",
+    "icon": "kitchen",
+    "brand": "پارس‌تک",
+    "model": "KI-1728",
+    "price": 8350000,
+    "power": 812,
+    "material": null,
+    "warranty": 18,
+    "inStock": true,
+    "rating": 3.9
+  },
+  {
+    "id": 106,
+    "name": "کیان‌الکتریک لوازم آشپزخانه برقی قهوه‌ساز",
+    "category": "kitchenette",
+    "categoryLabel": "لوازم آشپزخانه برقی",
+    "icon": "kitchen",
+    "brand": "کیان‌الکتریک",
+    "model": "KI-1735",
+    "price": 1970000,
+    "power": 1104,
+    "material": null,
+    "warranty": 18,
+    "inStock": true,
+    "rating": 4.9
+  },
+  {
+    "id": 107,
+    "name": "نوین‌هوم لوازم آشپزخانه برقی توستر نان",
+    "category": "kitchenette",
+    "categoryLabel": "لوازم آشپزخانه برقی",
+    "icon": "kitchen",
+    "brand": "نوین‌هوم",
+    "model": "KI-1742",
+    "price": 8990000,
+    "power": 1264,
+    "material": null,
+    "warranty": 12,
+    "inStock": true,
+    "rating": 3.9
+  },
+  {
+    "id": 108,
+    "name": "زرین لوازم لوازم آشپزخانه برقی چای‌ساز",
+    "category": "kitchenette",
+    "categoryLabel": "لوازم آشپزخانه برقی",
+    "icon": "kitchen",
+    "brand": "زرین لوازم",
+    "model": "KI-1749",
+    "price": 4070000,
+    "power": 797,
+    "material": null,
+    "warranty": 24,
+    "inStock": true,
+    "rating": 4.1
+  },
+  {
+    "id": 109,
+    "name": "آریانا هوم تلویزیون و صوتی‌تصویری ۴۳ اینچ هوشمند",
+    "category": "tv",
+    "categoryLabel": "تلویزیون و صوتی‌تصویری",
+    "icon": "tv",
+    "brand": "آریانا هوم",
+    "model": "TV-1756",
+    "price": 20160000,
+    "power": 179,
+    "material": null,
+    "warranty": 12,
+    "inStock": true,
+    "rating": 4.9
+  },
+  {
+    "id": 110,
+    "name": "دلتا خانه تلویزیون و صوتی‌تصویری ۵۵ اینچ 4K",
+    "category": "tv",
+    "categoryLabel": "تلویزیون و صوتی‌تصویری",
+    "icon": "tv",
+    "brand": "دلتا خانه",
+    "model": "TV-1763",
+    "price": 52220000,
+    "power": 75,
+    "material": null,
+    "warranty": 36,
+    "inStock": true,
+    "rating": 3.9
+  },
+  {
+    "id": 111,
+    "name": "سپهر الکتریک تلویزیون و صوتی‌تصویری ۶۵ اینچ هوشمند",
+    "category": "tv",
+    "categoryLabel": "تلویزیون و صوتی‌تصویری",
+    "icon": "tv",
+    "brand": "سپهر الکتریک",
+    "model": "TV-1770",
+    "price": 41050000,
+    "power": 79,
+    "material": null,
+    "warranty": 24,
+    "inStock": true,
+    "rating": 4.8
+  },
+  {
+    "id": 112,
+    "name": "بامو تک تلویزیون و صوتی‌تصویری ساندبار",
+    "category": "tv",
+    "categoryLabel": "تلویزیون و صوتی‌تصویری",
+    "icon": "tv",
+    "brand": "بامو تک",
+    "model": "TV-1777",
+    "price": 26170000,
+    "power": 204,
+    "material": null,
+    "warranty": 18,
+    "inStock": true,
+    "rating": 3.6
+  },
+  {
+    "id": 113,
+    "name": "پارس‌تک تلویزیون و صوتی‌تصویری پروژکتور خانگی",
+    "category": "tv",
+    "categoryLabel": "تلویزیون و صوتی‌تصویری",
+    "icon": "tv",
+    "brand": "پارس‌تک",
+    "model": "TV-1784",
+    "price": 24720000,
+    "power": 94,
+    "material": null,
+    "warranty": 24,
+    "inStock": true,
+    "rating": 4.9
+  },
+  {
+    "id": 114,
+    "name": "کیان‌الکتریک تلویزیون و صوتی‌تصویری ۴۳ اینچ هوشمند",
+    "category": "tv",
+    "categoryLabel": "تلویزیون و صوتی‌تصویری",
+    "icon": "tv",
+    "brand": "کیان‌الکتریک",
+    "model": "TV-1791",
+    "price": 33670000,
+    "power": 206,
+    "material": null,
+    "warranty": 18,
+    "inStock": false,
+    "rating": 4
+  },
+  {
+    "id": 115,
+    "name": "نوین‌هوم تلویزیون و صوتی‌تصویری ۵۵ اینچ 4K",
+    "category": "tv",
+    "categoryLabel": "تلویزیون و صوتی‌تصویری",
+    "icon": "tv",
+    "brand": "نوین‌هوم",
+    "model": "TV-1798",
+    "price": 38580000,
+    "power": 256,
+    "material": null,
+    "warranty": 12,
+    "inStock": true,
+    "rating": 3.8
+  },
+  {
+    "id": 116,
+    "name": "زرین لوازم تلویزیون و صوتی‌تصویری ۶۵ اینچ هوشمند",
+    "category": "tv",
+    "categoryLabel": "تلویزیون و صوتی‌تصویری",
+    "icon": "tv",
+    "brand": "زرین لوازم",
+    "model": "TV-1805",
+    "price": 24260000,
+    "power": 130,
+    "material": null,
+    "warranty": 12,
+    "inStock": true,
+    "rating": 4.9
+  },
+  {
+    "id": 117,
+    "name": "آریانا هوم تلویزیون و صوتی‌تصویری ساندبار",
+    "category": "tv",
+    "categoryLabel": "تلویزیون و صوتی‌تصویری",
+    "icon": "tv",
+    "brand": "آریانا هوم",
+    "model": "TV-1812",
+    "price": 25000000,
+    "power": 66,
+    "material": null,
+    "warranty": 12,
+    "inStock": true,
+    "rating": 3.7
+  },
+  {
+    "id": 118,
+    "name": "دلتا خانه تلویزیون و صوتی‌تصویری پروژکتور خانگی",
+    "category": "tv",
+    "categoryLabel": "تلویزیون و صوتی‌تصویری",
+    "icon": "tv",
+    "brand": "دلتا خانه",
+    "model": "TV-1819",
+    "price": 10020000,
+    "power": 224,
+    "material": null,
+    "warranty": 12,
+    "inStock": true,
+    "rating": 4.5
+  },
+  {
+    "id": 119,
+    "name": "سپهر الکتریک تلویزیون و صوتی‌تصویری ۴۳ اینچ هوشمند",
+    "category": "tv",
+    "categoryLabel": "تلویزیون و صوتی‌تصویری",
+    "icon": "tv",
+    "brand": "سپهر الکتریک",
+    "model": "TV-1826",
+    "price": 40580000,
+    "power": 135,
+    "material": null,
+    "warranty": 18,
+    "inStock": true,
+    "rating": 4.2
+  },
+  {
+    "id": 120,
+    "name": "بامو تک تلویزیون و صوتی‌تصویری ۵۵ اینچ 4K",
+    "category": "tv",
+    "categoryLabel": "تلویزیون و صوتی‌تصویری",
+    "icon": "tv",
+    "brand": "بامو تک",
+    "model": "TV-1833",
+    "price": 27480000,
+    "power": 169,
+    "material": null,
+    "warranty": 36,
+    "inStock": true,
+    "rating": 4.1
+  },
+  {
+    "id": 121,
+    "name": "پارس‌تک ظروف و قابلمه تابه گرانیتی",
+    "category": "cookware",
+    "categoryLabel": "ظروف و قابلمه",
+    "icon": "cookware",
+    "brand": "پارس‌تک",
+    "model": "CO-1840",
+    "price": 1610000,
+    "power": null,
+    "material": "گرانیتی",
+    "warranty": 18,
+    "inStock": true,
+    "rating": 4.4
+  },
+  {
+    "id": 122,
+    "name": "کیان‌الکتریک ظروف و قابلمه قابلمه استیل",
+    "category": "cookware",
+    "categoryLabel": "ظروف و قابلمه",
+    "icon": "cookware",
+    "brand": "کیان‌الکتریک",
+    "model": "CO-1847",
+    "price": 5360000,
+    "power": null,
+    "material": "استیل ضدزنگ",
+    "warranty": 36,
+    "inStock": false,
+    "rating": 3.9
+  },
+  {
+    "id": 123,
+    "name": "نوین‌هوم ظروف و قابلمه سرویس قابلمه ۱۲ پارچه",
+    "category": "cookware",
+    "categoryLabel": "ظروف و قابلمه",
+    "icon": "cookware",
+    "brand": "نوین‌هوم",
+    "model": "CO-1854",
+    "price": 7050000,
+    "power": null,
+    "material": "چدن",
+    "warranty": 18,
+    "inStock": false,
+    "rating": 3.9
+  },
+  {
+    "id": 124,
+    "name": "زرین لوازم ظروف و قابلمه تابه چدن",
+    "category": "cookware",
+    "categoryLabel": "ظروف و قابلمه",
+    "icon": "cookware",
+    "brand": "زرین لوازم",
+    "model": "CO-1861",
+    "price": 2810000,
+    "power": null,
+    "material": "تفلون مقاوم",
+    "warranty": 18,
+    "inStock": true,
+    "rating": 3.4
+  },
+  {
+    "id": 125,
+    "name": "آریانا هوم ظروف و قابلمه سرویس تابه ۶ پارچه",
+    "category": "cookware",
+    "categoryLabel": "ظروف و قابلمه",
+    "icon": "cookware",
+    "brand": "آریانا هوم",
+    "model": "CO-1868",
+    "price": 670000,
+    "power": null,
+    "material": "مسی",
+    "warranty": 12,
+    "inStock": false,
+    "rating": 4.4
+  },
+  {
+    "id": 126,
+    "name": "دلتا خانه ظروف و قابلمه دیگ بخارپز",
+    "category": "cookware",
+    "categoryLabel": "ظروف و قابلمه",
+    "icon": "cookware",
+    "brand": "دلتا خانه",
+    "model": "CO-1875",
+    "price": 5960000,
+    "power": null,
+    "material": "گرانیتی",
+    "warranty": 12,
+    "inStock": true,
+    "rating": 4
+  },
+  {
+    "id": 127,
+    "name": "سپهر الکتریک ظروف و قابلمه تابه گرانیتی",
+    "category": "cookware",
+    "categoryLabel": "ظروف و قابلمه",
+    "icon": "cookware",
+    "brand": "سپهر الکتریک",
+    "model": "CO-1882",
+    "price": 2980000,
+    "power": null,
+    "material": "استیل ضدزنگ",
+    "warranty": 12,
+    "inStock": true,
+    "rating": 3.8
+  },
+  {
+    "id": 128,
+    "name": "بامو تک ظروف و قابلمه قابلمه استیل",
+    "category": "cookware",
+    "categoryLabel": "ظروف و قابلمه",
+    "icon": "cookware",
+    "brand": "بامو تک",
+    "model": "CO-1889",
+    "price": 4140000,
+    "power": null,
+    "material": "چدن",
+    "warranty": 36,
+    "inStock": true,
+    "rating": 4
+  },
+  {
+    "id": 129,
+    "name": "پارس‌تک ظروف و قابلمه سرویس قابلمه ۱۲ پارچه",
+    "category": "cookware",
+    "categoryLabel": "ظروف و قابلمه",
+    "icon": "cookware",
+    "brand": "پارس‌تک",
+    "model": "CO-1896",
+    "price": 1700000,
+    "power": null,
+    "material": "تفلون مقاوم",
+    "warranty": 24,
+    "inStock": true,
+    "rating": 4.7
+  },
+  {
+    "id": 130,
+    "name": "کیان‌الکتریک ظروف و قابلمه تابه چدن",
+    "category": "cookware",
+    "categoryLabel": "ظروف و قابلمه",
+    "icon": "cookware",
+    "brand": "کیان‌الکتریک",
+    "model": "CO-1903",
+    "price": 2700000,
+    "power": null,
+    "material": "مسی",
+    "warranty": 12,
+    "inStock": false,
+    "rating": 4.3
+  },
+  {
+    "id": 131,
+    "name": "نوین‌هوم ظروف و قابلمه سرویس تابه ۶ پارچه",
+    "category": "cookware",
+    "categoryLabel": "ظروف و قابلمه",
+    "icon": "cookware",
+    "brand": "نوین‌هوم",
+    "model": "CO-1910",
+    "price": 4980000,
+    "power": null,
+    "material": "گرانیتی",
+    "warranty": 18,
+    "inStock": true,
+    "rating": 3.4
+  },
+  {
+    "id": 132,
+    "name": "زرین لوازم ظروف و قابلمه دیگ بخارپز",
+    "category": "cookware",
+    "categoryLabel": "ظروف و قابلمه",
+    "icon": "cookware",
+    "brand": "زرین لوازم",
+    "model": "CO-1917",
+    "price": 1300000,
+    "power": null,
+    "material": "استیل ضدزنگ",
+    "warranty": 24,
+    "inStock": true,
+    "rating": 4.4
+  }
+];
+const CATEGORIES = [
+  {
+    "key": "fridge",
+    "label": "یخچال و فریزر",
+    "icon": "fridge"
+  },
+  {
+    "key": "washer",
+    "label": "ماشین لباسشویی",
+    "icon": "washer"
+  },
+  {
+    "key": "dishwasher",
+    "label": "ماشین ظرفشویی",
+    "icon": "dishwasher"
+  },
+  {
+    "key": "stove",
+    "label": "اجاق گاز و هود",
+    "icon": "stove"
+  },
+  {
+    "key": "microwave",
+    "label": "مایکروویو",
+    "icon": "microwave"
+  },
+  {
+    "key": "vacuum",
+    "label": "جاروبرقی",
+    "icon": "vacuum"
+  },
+  {
+    "key": "fan",
+    "label": "کولر و پنکه",
+    "icon": "fan"
+  },
+  {
+    "key": "iron",
+    "label": "اتو و بخارشو",
+    "icon": "iron"
+  },
+  {
+    "key": "kitchenette",
+    "label": "لوازم آشپزخانه برقی",
+    "icon": "kitchen"
+  },
+  {
+    "key": "tv",
+    "label": "تلویزیون و صوتی‌تصویری",
+    "icon": "tv"
+  },
+  {
+    "key": "cookware",
+    "label": "ظروف و قابلمه",
+    "icon": "cookware"
+  }
+];
+
+(function () {
+  "use strict";
+
+  /* ---------- Category icons (inline SVG, stroke-based, single color via currentColor) ---------- */
+  const ICONS = {
+    fridge: '<svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2"><rect x="12" y="4" width="24" height="40" rx="3"/><line x1="12" y1="18" x2="36" y2="18"/><line x1="18" y1="9" x2="18" y2="13"/><line x1="18" y1="23" x2="18" y2="27"/></svg>',
+    washer: '<svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2"><rect x="6" y="6" width="36" height="36" rx="4"/><circle cx="24" cy="26" r="10"/><circle cx="24" cy="26" r="4"/><circle cx="12" cy="12" r="1.5" fill="currentColor" stroke="none"/><circle cx="18" cy="12" r="1.5" fill="currentColor" stroke="none"/></svg>',
+    dishwasher: '<svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2"><rect x="6" y="6" width="36" height="36" rx="3"/><rect x="6" y="6" width="36" height="8" rx="3"/><circle cx="12" cy="10" r="1" fill="currentColor" stroke="none"/><path d="M14 26h20M14 32h20M14 20h20" stroke-dasharray="3 3"/></svg>',
+    stove: '<svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="10" width="38" height="30" rx="3"/><circle cx="16" cy="22" r="5"/><circle cx="32" cy="22" r="5"/><line x1="10" y1="34" x2="38" y2="34"/></svg>',
+    microwave: '<svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="10" width="40" height="26" rx="3"/><rect x="8" y="14" width="22" height="18" rx="2"/><line x1="36" y1="17" x2="40" y2="17"/><line x1="36" y1="23" x2="40" y2="23"/><line x1="36" y1="29" x2="40" y2="29"/></svg>',
+    vacuum: '<svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2"><circle cx="16" cy="16" r="8"/><path d="M22 21 L38 38"/><path d="M33 38h8"/></svg>',
+    fan: '<svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2"><circle cx="24" cy="24" r="4"/><path d="M24 20c0-6 4-10 9-10 2 0 3 2 1 4-3 3-6 4-10 6z"/><path d="M28 24c6 0 10 4 10 9 0 2-2 3-4 1-3-3-4-6-6-10z"/><path d="M20 24c-6 0-10-4-10-9 0-2 2-3 4-1 3 3 4 6 6 10z"/></svg>',
+    iron: '<svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 30 Q8 16 26 16 H36 a4 4 0 0 1 4 4 v6 a4 4 0 0 1-4 4 H14 Q8 30 8 30 Z"/><line x1="16" y1="36" x2="34" y2="36"/></svg>',
+    kitchen: '<svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2"><rect x="14" y="18" width="20" height="22" rx="2"/><path d="M14 18 L17 8 H31 L34 18"/><line x1="24" y1="24" x2="24" y2="34"/></svg>',
+    tv: '<svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="8" width="40" height="24" rx="3"/><line x1="18" y1="40" x2="30" y2="40"/><line x1="24" y1="32" x2="24" y2="40"/></svg>',
+    cookware: '<svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2"><ellipse cx="20" cy="24" rx="14" ry="6"/><path d="M6 24v3c0 3.3 6.3 6 14 6s14-2.7 14-6v-3"/><line x1="34" y1="21" x2="44" y2="18"/></svg>',
+  };
+  function iconFor(key) { return ICONS[key] || ICONS.kitchen; }
+
+  const fmtToman = (n) => n.toLocaleString('fa-IR') + ' تومان';
+
+  /* ---------- State ---------- */
+  let state = {
+    category: 'all',
+    query: '',
+    sort: 'default',
+    cart: loadCart(),
+  };
+
+  function loadCart() {
+    try {
+      const raw = localStorage.getItem('demo-cart');
+      return raw ? JSON.parse(raw) : {};
+    } catch (e) { return {}; }
+  }
+  function saveCart() {
+    try { localStorage.setItem('demo-cart', JSON.stringify(state.cart)); } catch (e) {}
+  }
+
+  /* ---------- DOM refs ---------- */
+  const grid = document.getElementById('productGrid');
+  const chipsEl = document.getElementById('categoryChips');
+  const searchInput = document.getElementById('searchInput');
+  const sortSelect = document.getElementById('sortSelect');
+  const resultsMeta = document.getElementById('resultsMeta');
+  const emptyState = document.getElementById('emptyState');
+  const specCount = document.getElementById('specCount');
+
+  specCount.textContent = PRODUCTS.length + ' ITEMS';
+
+  /* ---------- Category chips ---------- */
+  function renderChips() {
+    const frag = document.createDocumentFragment();
+    const allChip = makeChip('all', 'همه');
+    frag.appendChild(allChip);
+    CATEGORIES.forEach(c => frag.appendChild(makeChip(c.key, c.label)));
+    chipsEl.appendChild(frag);
+  }
+  function makeChip(key, label) {
+    const btn = document.createElement('button');
+    btn.className = 'chip';
+    btn.textContent = label;
+    btn.setAttribute('role', 'tab');
+    btn.setAttribute('aria-selected', String(state.category === key));
+    btn.addEventListener('click', () => {
+      state.category = key;
+      [...chipsEl.children].forEach(c => c.setAttribute('aria-selected', 'false'));
+      btn.setAttribute('aria-selected', 'true');
+      render();
+    });
+    return btn;
+  }
+
+  /* ---------- Filtering / sorting ---------- */
+  function getFiltered() {
+    let list = PRODUCTS.filter(p => {
+      if (state.category !== 'all' && p.category !== state.category) return false;
+      if (state.query) {
+        const q = state.query.toLowerCase();
+        return p.name.toLowerCase().includes(q) || p.brand.toLowerCase().includes(q) || p.categoryLabel.includes(q);
+      }
+      return true;
+    });
+    if (state.sort === 'price-asc') list = list.slice().sort((a, b) => a.price - b.price);
+    if (state.sort === 'price-desc') list = list.slice().sort((a, b) => b.price - a.price);
+    if (state.sort === 'rating-desc') list = list.slice().sort((a, b) => b.rating - a.rating);
+    return list;
+  }
+
+  /* ---------- Product grid ---------- */
+  function renderGrid() {
+    const list = getFiltered();
+    resultsMeta.textContent = `${list.length.toLocaleString('fa-IR')} محصول از ${PRODUCTS.length.toLocaleString('fa-IR')}`;
+    grid.innerHTML = '';
+    emptyState.hidden = list.length !== 0;
+
+    const frag = document.createDocumentFragment();
+    list.forEach(p => frag.appendChild(productCard(p)));
+    grid.appendChild(frag);
+  }
+
+  function productCard(p) {
+    const card = document.createElement('article');
+    card.className = 'card';
+    card.innerHTML = `
+      <div class="card-visual" style="background:${swatchFor(p.category)}" data-open="${p.id}">
+        <span class="stock-tag ${p.inStock ? '' : 'out'}">${p.inStock ? 'موجود' : 'ناموجود'}</span>
+        <span style="color:${iconColorFor(p.category)}">${iconFor(p.icon)}</span>
+      </div>
+      <div class="card-body">
+        <div class="card-cat">${p.categoryLabel}</div>
+        <h3 class="card-name" data-open="${p.id}">${p.name}</h3>
+        <div class="card-rating">★ ${p.rating.toLocaleString('fa-IR')}</div>
+        <div class="card-price">${fmtToman(p.price)}</div>
+      </div>
+      <div class="card-plate">
+        <span>مدل ${p.model}</span>
+        <span>${p.power != null ? p.power.toLocaleString('fa-IR') + 'W' : p.material}</span>
+        <span>${p.warranty.toLocaleString('fa-IR')} ماه گارانتی</span>
+      </div>
+      <div class="card-actions">
+        <button class="add-btn" data-add="${p.id}" ${p.inStock ? '' : 'disabled'}>
+          ${p.inStock ? 'افزودن به سبد' : 'ناموجود'}
+        </button>
+      </div>
+    `;
+    card.querySelectorAll('[data-open]').forEach(el => el.addEventListener('click', () => openModal(p.id)));
+    const addBtn = card.querySelector('[data-add]');
+    if (addBtn) addBtn.addEventListener('click', () => addToCart(p.id));
+    return card;
+  }
+
+  /* Monochrome black / white / gold swatch scale — alternates a pale-gold tint
+     with a neutral off-white so the grid still reads as distinct categories
+     without introducing any hue outside the theme. */
+  function swatchFor(cat) {
+    const map = {
+      fridge: '#F7F1DE', washer: '#F4F4F1', dishwasher: '#F8F0D9', stove: '#F1F1EE',
+      microwave: '#F7F1DE', vacuum: '#F4F4F1', fan: '#F8F0D9', iron: '#F1F1EE',
+      kitchen: '#F7F1DE', tv: '#F4F4F1', cookware: '#F8F0D9',
+    };
+    return map[cat] || '#F4F4F1';
+  }
+  function iconColorFor(cat) {
+    // Every other category rendered in gold instead of ink, purely for scan-ability.
+    const goldSet = new Set(['fridge', 'stove', 'kitchen', 'fan', 'cookware']);
+    return goldSet.has(cat) ? '#B8922B' : '#171717';
+  }
+
+  /* ---------- Cart ---------- */
+  const cartBtn = document.getElementById('cartBtn');
+  const cartDrawer = document.getElementById('cartDrawer');
+  const cartOverlay = document.getElementById('cartOverlay');
+  const cartClose = document.getElementById('cartClose');
+  const cartItemsEl = document.getElementById('cartItems');
+  const cartTotalEl = document.getElementById('cartTotal');
+  const cartCountEl = document.getElementById('cartCount');
+
+  function addToCart(id) {
+    state.cart[id] = (state.cart[id] || 0) + 1;
+    saveCart();
+    renderCart();
+    openCart();
+  }
+  function changeQty(id, delta) {
+    const next = (state.cart[id] || 0) + delta;
+    if (next <= 0) delete state.cart[id];
+    else state.cart[id] = next;
+    saveCart();
+    renderCart();
+  }
+  function cartCount() {
+    return Object.values(state.cart).reduce((a, b) => a + b, 0);
+  }
+  function renderCart() {
+    const ids = Object.keys(state.cart);
+    cartCountEl.textContent = cartCount().toLocaleString('fa-IR');
+    if (ids.length === 0) {
+      cartItemsEl.innerHTML = '<p class="cart-empty">سبد خرید شما خالی است.</p>';
+      cartTotalEl.textContent = fmtToman(0);
+      return;
+    }
+    let total = 0;
+    cartItemsEl.innerHTML = '';
+    ids.forEach(idStr => {
+      const id = Number(idStr);
+      const p = PRODUCTS.find(x => x.id === id);
+      if (!p) return;
+      const qty = state.cart[id];
+      total += p.price * qty;
+      const row = document.createElement('div');
+      row.className = 'cart-item';
+      row.innerHTML = `
+        <div class="cart-item-icon" style="background:${swatchFor(p.category)}"><span style="color:${iconColorFor(p.category)}">${iconFor(p.icon)}</span></div>
+        <div class="cart-item-info">
+          <div class="cart-item-name">${p.name}</div>
+          <div class="cart-item-price">${fmtToman(p.price)}</div>
+        </div>
+        <div class="qty-controls">
+          <button data-dec="${id}" aria-label="کم کردن">−</button>
+          <span>${qty.toLocaleString('fa-IR')}</span>
+          <button data-inc="${id}" aria-label="افزودن">+</button>
+        </div>
+      `;
+      row.querySelector('[data-dec]').addEventListener('click', () => changeQty(id, -1));
+      row.querySelector('[data-inc]').addEventListener('click', () => changeQty(id, 1));
+      cartItemsEl.appendChild(row);
+    });
+    cartTotalEl.textContent = fmtToman(total);
+  }
+  function openCart() {
+    cartDrawer.hidden = false;
+    cartOverlay.hidden = false;
+    cartBtn.setAttribute('aria-expanded', 'true');
+  }
+  function closeCart() {
+    cartDrawer.hidden = true;
+    cartOverlay.hidden = true;
+    cartBtn.setAttribute('aria-expanded', 'false');
+  }
+  cartBtn.addEventListener('click', openCart);
+  cartClose.addEventListener('click', closeCart);
+  cartOverlay.addEventListener('click', closeCart);
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') { closeCart(); closeModal(); } });
+
+  /* ---------- Product modal ---------- */
+  const modal = document.getElementById('productModal');
+  const modalOverlay = document.getElementById('modalOverlay');
+  const modalClose = document.getElementById('modalClose');
+  const modalBody = document.getElementById('modalBody');
+
+  function openModal(id) {
+    const p = PRODUCTS.find(x => x.id === id);
+    if (!p) return;
+    modalBody.innerHTML = `
+      <div class="modal-visual" style="background:${swatchFor(p.category)}">
+        <span style="color:${iconColorFor(p.category)}">${iconFor(p.icon)}</span>
+      </div>
+      <div class="modal-content">
+        <h2 id="modalTitle">${p.name}</h2>
+        <div class="modal-cat">${p.categoryLabel} · برند ${p.brand}</div>
+        <div class="modal-price">${fmtToman(p.price)}</div>
+        <dl class="modal-specs">
+          <div><dt>کد مدل</dt><dd>${p.model}</dd></div>
+          <div><dt>${p.power != null ? 'توان مصرفی' : 'جنس'}</dt><dd>${p.power != null ? p.power.toLocaleString('fa-IR') + ' وات' : p.material}</dd></div>
+          <div><dt>گارانتی</dt><dd>${p.warranty.toLocaleString('fa-IR')} ماه</dd></div>
+          <div><dt>وضعیت</dt><dd>${p.inStock ? 'موجود در انبار دمو' : 'ناموجود'}</dd></div>
+        </dl>
+        <button class="add-btn" ${p.inStock ? '' : 'disabled'} id="modalAddBtn">${p.inStock ? 'افزودن به سبد' : 'ناموجود'}</button>
+      </div>
+    `;
+    const addBtn = document.getElementById('modalAddBtn');
+    if (addBtn) addBtn.addEventListener('click', () => { addToCart(p.id); closeModal(); });
+    modal.hidden = false;
+    modalOverlay.hidden = false;
+  }
+  function closeModal() {
+    modal.hidden = true;
+    modalOverlay.hidden = true;
+  }
+  modalClose.addEventListener('click', closeModal);
+  modalOverlay.addEventListener('click', closeModal);
+
+  /* ---------- Search / sort ---------- */
+  let searchTimer;
+  searchInput.addEventListener('input', (e) => {
+    clearTimeout(searchTimer);
+    searchTimer = setTimeout(() => {
+      state.query = e.target.value.trim();
+      renderGrid();
+    }, 150);
+  });
+  sortSelect.addEventListener('change', (e) => {
+    state.sort = e.target.value;
+    renderGrid();
+  });
+
+  /* ---------- Init ---------- */
+  function render() { renderGrid(); }
+  renderChips();
+  renderGrid();
+  renderCart();
+})();
+
+</script>
 </body>
 </html>
