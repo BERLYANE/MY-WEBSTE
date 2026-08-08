@@ -218,8 +218,10 @@
     cartOverlay.hidden = true;
     cartBtn.setAttribute('aria-expanded', 'false');
   }
-  cartBtn.addEventListener('click', openCart);
-  cartClose.addEventListener('click', closeCart);
+  cartBtn.addEventListener('click', () => {
+    if (!cartDrawer.hidden) { closeCart(); } else { openCart(); }
+  });
+  cartClose.addEventListener('click', (e) => { e.stopPropagation(); closeCart(); });
   cartOverlay.addEventListener('click', closeCart);
   document.addEventListener('keydown', (e) => { if (e.key === 'Escape') { closeCart(); closeModal(); } });
 
