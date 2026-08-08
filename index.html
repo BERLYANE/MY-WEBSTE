@@ -1,138 +1,410 @@
-<!DOCTYPE html>
-<html lang="fa" dir="rtl">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LUX HOME | فروشگاه لوازم خانگی</title>
-    <!-- اتصال فونت وزیرمتن -->
-    <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet" type="text/css" />
-    
-    <style>
-        /* ================= متغیرهای رنگی ================= */
-        :root {
-            --bg-black: #050505;
-            --card-black: #121212;
-            --gold-primary: #d4af37;
-            --gold-hover: #f3e5ab;
-            --text-white: #ffffff;
-            --text-muted: #999999;
-            --border-gold: rgba(212, 175, 55, 0.2);
-        }
-
-        /* ================= استایل‌های پایه ================= */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Vazirmatn', sans-serif;
-            scroll-behavior: smooth;
-        }
-
-        body {
-            background-color: var(--bg-black);
-            color: var(--text-white);
-            line-height: 1.6;
-        }
-
-        /* ================= هدر (نوار بالایی) ================= */
-        header {
-            background-color: rgba(0, 0, 0, 0.9);
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid var(--border-gold);
-            padding: 1.2rem 3rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
-
-        .logo {
-            font-size: 1.5rem;
-            font-weight: 900;
-            color: var(--gold-primary);
-            text-decoration: none;
-            letter-spacing: 1px;
-        }
-
-        nav a {
-            color: var(--text-white);
-            text-decoration: none;
-            margin: 0 1.5rem;
-            transition: color 0.3s ease, text-shadow 0.3s ease;
-            font-size: 1rem;
-        }
-
-        nav a:hover {
-            color: var(--gold-primary);
-            text-shadow: 0 0 10px rgba(212, 175, 55, 0.4);
-        }
-
-        .cart-btn {
-            background-color: transparent;
-            border: 1px solid var(--gold-primary);
-            color: var(--gold-primary);
-            padding: 0.6rem 1.5rem;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: all 0.4s ease;
-            font-weight: bold;
-        }
-
-        .cart-btn:hover {
-            background-color: var(--gold-primary);
-            color: #000;
-            box-shadow: 0 0 15px rgba(212, 175, 55, 0.5);
-        }
-
-        /* ================= بنر اصلی (Hero) ================= */
-        .hero {
-            text-align: center;
-            padding: 7rem 1rem;
-            background: radial-gradient(circle at center, #1a1a1a 0%, #000000 100%);
-            border-bottom: 1px solid var(--border-gold);
-        }
-
-        .hero h1 {
-            font-size: 3rem;
-            color: var(--gold-primary);
-            margin-bottom: 1rem;
-            text-shadow: 0 4px 10px rgba(0,0,0,0.5);
-        }
-
-        .hero p {
-            color: var(--text-muted);
-            max-width: 600px;
-            margin: 0 auto 1.5rem;
-            font-size: 1.2rem;
-        }
-
-        /* ================= کانتینر و تیتر بخش‌ها ================= */
-        .container {
-            max-width: 1200px;
-            margin: 4rem auto;
-            padding: 0 1.5rem;
-        }
-
-        .section-title {
-            text-align: center;
-            font-size: 2rem;
-            margin-bottom: 3rem;
-            color: var(--text-white);
-        }
-
-        .section-title::after {
-            content: '';
-            display: block;
-            width: 80px;
-            height: 3px;
-            background-color: var(--gold-primary);
-            margin: 0.8rem auto 0;
-            border-radius: 2px;
-        }
-
-        /* ================= گرید محصولات ================= */
-        .product-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, min
+<!DOCTYPE html>  
+<html lang="fa" dir="rtl">  
+<head>  
+    <meta charset="UTF-8">  
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">  
+    <title>LUX HOME | **فروشگاه** **لوازم** **خانگی**</title>  
+    <!-- **اتصال** **فونت** **وزیرمتن** -->  
+    <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet" type="text/css" />  
+      
+    <style>  
+        /* ================= **متغیرهای** **رنگی** ================= */  
+        :root {  
+            --bg-black: #050505;  
+            --card-black: #121212;  
+            --gold-primary: #d4af37;  
+            --gold-hover: #f3e5ab;  
+            --text-white: #ffffff;  
+            --text-muted: #999999;  
+            --border-gold: rgba(212, 175, 55, 0.2);  
+        }  
+  
+        /* ================= **استایل‌های** **پایه** ================= */  
+        * {  
+            margin: 0;  
+            padding: 0;  
+            box-sizing: border-box;  
+            font-family: 'Vazirmatn', sans-serif;  
+            scroll-behavior: smooth;  
+        }  
+  
+        body {  
+            background-color: var(--bg-black);  
+            color: var(--text-white);  
+            line-height: 1.6;  
+        }  
+  
+        /* ================= **هدر** (**نوار** **بالایی**) ================= */  
+        header {  
+            background-color: rgba(0, 0, 0, 0.9);  
+            backdrop-filter: blur(10px);  
+            border-bottom: 1px solid var(--border-gold);  
+            padding: 1.2rem 3rem;  
+            display: flex;  
+            justify-content: space-between;  
+            align-items: center;  
+            position: sticky;  
+            top: 0;  
+            z-index: 100;  
+        }  
+  
+        .logo {  
+            font-size: 1.5rem;  
+            font-weight: 900;  
+            color: var(--gold-primary);  
+            text-decoration: none;  
+            letter-spacing: 1px;  
+        }  
+  
+        nav a {  
+            color: var(--text-white);  
+            text-decoration: none;  
+            margin: 0 1.5rem;  
+            transition: color 0.3s ease, text-shadow 0.3s ease;  
+            font-size: 1rem;  
+        }  
+  
+        nav a:hover {  
+            color: var(--gold-primary);  
+            text-shadow: 0 0 10px rgba(212, 175, 55, 0.4);  
+        }  
+  
+        .cart-btn {  
+            background-color: transparent;  
+            border: 1px solid var(--gold-primary);  
+            color: var(--gold-primary);  
+            padding: 0.6rem 1.5rem;  
+            border-radius: 4px;  
+            cursor: pointer;  
+            transition: all 0.4s ease;  
+            font-weight: bold;  
+        }  
+  
+        .cart-btn:hover {  
+            background-color: var(--gold-primary);  
+            color: #000;  
+            box-shadow: 0 0 15px rgba(212, 175, 55, 0.5);  
+        }  
+  
+        /* ================= **بنر** **اصلی** (Hero) ================= */  
+        .hero {  
+            text-align: center;  
+            padding: 7rem 1rem;  
+            background: radial-gradient(circle at center, #1a1a1a 0%, #000000 100%);  
+            border-bottom: 1px solid var(--border-gold);  
+        }  
+  
+        .hero h1 {  
+            font-size: 3rem;  
+            color: var(--gold-primary);  
+            margin-bottom: 1rem;  
+            text-shadow: 0 4px 10px rgba(0,0,0,0.5);  
+        }  
+  
+        .hero p {  
+            color: var(--text-muted);  
+            max-width: 600px;  
+            margin: 0 auto 1.5rem;  
+            font-size: 1.2rem;  
+        }  
+  
+        /* ================= **کانتینر** **و** **تیتر** **بخش‌ها** ================= */  
+        .container {  
+            max-width: 1200px;  
+            margin: 4rem auto;  
+            padding: 0 1.5rem;  
+        }  
+  
+        .section-title {  
+            text-align: center;  
+            font-size: 2rem;  
+            margin-bottom: 3rem;  
+            color: var(--text-white);  
+        }  
+  
+        .section-title::after {  
+            content: '';  
+            display: block;  
+            width: 80px;  
+            height: 3px;  
+            background-color: var(--gold-primary);  
+            margin: 0.8rem auto 0;  
+            border-radius: 2px;  
+        }  
+  
+        /* ================= **گرید** **محصولات** ================= */  
+        .product-grid {  
+            display: grid;  
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));  
+            gap: 2.5rem;  
+        }  
+  
+        /* **انیمیشن** **ورود** **کارت‌ها** */  
+        @keyframes fadeInUp {  
+            from { opacity: 0; transform: translateY(30px); }  
+            to { opacity: 1; transform: translateY(0); }  
+        }  
+  
+        .product-card {  
+            background-color: var(--card-black);  
+            border: 1px solid var(--border-gold);  
+            border-radius: 12px;  
+            overflow: hidden;  
+            transition: all 0.4s ease;  
+            animation: fadeInUp 0.8s ease backwards;  
+        }  
+  
+        .product-card:nth-child(1) { animation-delay: 0.1s; }  
+        .product-card:nth-child(2) { animation-delay: 0.2s; }  
+        .product-card:nth-child(3) { animation-delay: 0.3s; }  
+        .product-card:nth-child(4) { animation-delay: 0.4s; }  
+  
+        .product-card:hover {  
+            transform: translateY(-10px);  
+            box-shadow: 0 10px 30px rgba(212, 175, 55, 0.15);  
+            border-color: var(--gold-primary);  
+        }  
+  
+        .img-wrapper {  
+            overflow: hidden;  
+        }  
+  
+        .product-img {  
+            width: 100%;  
+            height: 250px;  
+            object-fit: cover;  
+            background-color: #2a2a2a;  
+            transition: transform 0.5s ease;  
+        }  
+  
+        .product-card:hover .product-img {  
+            transform: scale(1.05);  
+        }  
+  
+        .product-info {  
+            padding: 1.5rem;  
+            position: relative;  
+            background: linear-gradient(0deg, var(--card-black) 80%, transparent);  
+        }  
+  
+        .product-title {  
+            font-size: 1.2rem;  
+            margin-bottom: 0.5rem;  
+            color: var(--text-white);  
+        }  
+  
+        .product-price {  
+            color: var(--gold-primary);  
+            font-size: 1.3rem;  
+            font-weight: bold;  
+            margin-bottom: 1.5rem;  
+        }  
+  
+        .btn-add {  
+            width: 100%;  
+            padding: 0.8rem;  
+            background-color: transparent;  
+            color: var(--gold-primary);  
+            border: 1px solid var(--gold-primary);  
+            border-radius: 6px;  
+            font-weight: bold;  
+            font-size: 1rem;  
+            cursor: pointer;  
+            transition: all 0.3s ease;  
+        }  
+  
+        .btn-add:hover {  
+            background-color: var(--gold-primary);  
+            color: var(--bg-black);  
+        }  
+  
+        /* ================= **بخش** **تماس** **با** **ما** ================= */  
+        .contact-section {  
+            background-color: var(--card-black);  
+            padding: 4rem 1.5rem;  
+            margin-top: 5rem;  
+            border-top: 1px solid var(--border-gold);  
+            border-bottom: 1px solid var(--border-gold);  
+        }  
+          
+        .contact-container {  
+            max-width: 600px;  
+            margin: 0 auto;  
+        }  
+  
+        .form-group {  
+            margin-bottom: 1.5rem;  
+        }  
+  
+        .form-group label {  
+            display: block;  
+            margin-bottom: 0.5rem;  
+            color: var(--text-muted);  
+        }  
+  
+        .form-control {  
+            width: 100%;  
+            padding: 0.8rem;  
+            background-color: #1a1a1a;  
+            border: 1px solid #333;  
+            border-radius: 4px;  
+            color: var(--text-white);  
+            transition: border-color 0.3s;  
+        }  
+  
+        .form-control:focus {  
+            outline: none;  
+            border-color: var(--gold-primary);  
+        }  
+  
+        textarea.form-control {  
+            resize: vertical;  
+            min-height: 120px;  
+        }  
+  
+        .btn-submit {  
+            background-color: var(--gold-primary);  
+            color: #000;  
+            border: none;  
+            padding: 1rem 2rem;  
+            border-radius: 4px;  
+            font-weight: bold;  
+            font-size: 1.1rem;  
+            cursor: pointer;  
+            width: 100%;  
+            transition: background-color 0.3s;  
+        }  
+  
+        .btn-submit:hover {  
+            background-color: var(--gold-hover);  
+        }  
+  
+        /* ================= **فوتر** ================= */  
+        footer {  
+            background-color: #000;  
+            text-align: center;  
+            padding: 2.5rem;  
+            color: var(--text-muted);  
+        }  
+  
+        /* ================= **ریسپانسیو** (**موبایل**) ================= */  
+        @media (max-width: 768px) {  
+            header {  
+                flex-direction: column;  
+                gap: 1rem;  
+                padding: 1rem;  
+            }  
+            nav {  
+                display: flex;  
+                flex-wrap: wrap;  
+                justify-content: center;  
+                gap: 0.5rem;  
+            }  
+            .hero h1 { font-size: 2rem; }  
+            .hero { padding: 4rem 1rem; }  
+        }  
+    </style>  
+</head>  
+<body>  
+  
+    <!-- **هدر** **سایت** -->  
+    <header>  
+        <a href="#" class="logo">LUX HOME</a>  
+        <nav>  
+            <a href="#">**صفحه** **اصلی**</a>  
+            <a href="#products">**محصولات**</a>  
+            <a href="#contact">**تماس** **با** **ما**</a>  
+        </nav>  
+        <button class="cart-btn" onclick="alert('**سبد** **خرید** **فعلا** **خالی** **است**.')">**سبد** **خرید** (**۰**)</button>  
+    </header>  
+  
+    <!-- **بنر** **اصلی** -->  
+    <section class="hero">  
+        <h1>**تجربه‌ای** **متفاوت** **از** **تجهیز** **خانه**</h1>  
+        <p>**مجموعه‌ای** **از** **لوکس‌ترین** **و** **باکیفیت‌ترین** **لوازم** **خانگی** **با** **طراحی** **مدرن** **و** **مینیمال** **برای** **خانه‌های** **خاص**</p>  
+    </section>  
+  
+    <!-- **بخش** **محصولات** -->  
+    <div id="products" class="container">  
+        <h2 class="section-title">**محصولات** **ویژه**</h2>  
+          
+        <div class="product-grid">  
+            <!-- **محصول** 1 -->  
+            <div class="product-card">  
+                <div class="img-wrapper">  
+                    <img src="https://images.unsplash.com/photo-1556911220-e15b29be8c8f?auto=format&fit=crop&w=500&q=80" alt="**اسپرسوساز**" class="product-img">  
+                </div>  
+                <div class="product-info">  
+                    <h3 class="product-title">**اسپرسوساز** **اتوماتیک** **لوکس**</h3>  
+                    <p class="product-price">**۱۲**,**۵۰۰**,**۰۰۰** **تومان**</p>  
+                    <button class="btn-add" onclick="alert('**به** **سبد** **خرید** **افزوده** **شد**!')">**افزودن** **به** **سبد** **خرید**</button>  
+                </div>  
+            </div>  
+  
+            <!-- **محصول** 2 -->  
+            <div class="product-card">  
+                <div class="img-wrapper">  
+                    <img src="https://images.unsplash.com/photo-1584269600464-37b1b58a9fe7?auto=format&fit=crop&w=500&q=80" alt="**مخلوط** **کن**" class="product-img">  
+                </div>  
+                <div class="product-info">  
+                    <h3 class="product-title">**مخلوط‌کن** **لمسی** **حرفه‌ای**</h3>  
+                    <p class="product-price">**۴**,**۸۰۰**,**۰۰۰** **تومان**</p>  
+                    <button class="btn-add" onclick="alert('**به** **سبد** **خرید** **افزوده** **شد**!')">**افزودن** **به** **سبد** **خرید**</button>  
+                </div>  
+            </div>  
+  
+            <!-- **محصول** 3 -->  
+            <div class="product-card">  
+                <div class="img-wrapper">  
+                    <img src="https://images.unsplash.com/photo-1570222094114-d054a817e56b?auto=format&fit=crop&w=500&q=80" alt="**مایکروویو**" class="product-img">  
+                </div>  
+                <div class="product-info">  
+                    <h3 class="product-title">**مایکروویو** **هوشمند** **مشکی**</h3>  
+                    <p class="product-price">**۹**,**۲۰۰**,**۰۰۰** **تومان**</p>  
+                    <button class="btn-add" onclick="alert('**به** **سبد** **خرید** **افزوده** **شد**!')">**افزودن** **به** **سبد** **خرید**</button>  
+                </div>  
+            </div>  
+  
+            <!-- **محصول** 4 -->  
+            <div class="product-card">  
+                <div class="img-wrapper">  
+                    <img src="https://images.unsplash.com/photo-1585338107529-13afc5f02586?auto=format&fit=crop&w=500&q=80" alt="**توستر**" class="product-img">  
+                </div>  
+                <div class="product-info">  
+                    <h3 class="product-title">**توستر** **استیل**-**طلایی**</h3>  
+                    <p class="product-price">**۳**,**۱۰۰**,**۰۰۰** **تومان**</p>  
+                    <button class="btn-add" onclick="alert('**به** **سبد** **خرید** **افزوده** **شد**!')">**افزودن** **به** **سبد** **خرید**</button>  
+                </div>  
+            </div>  
+        </div>  
+    </div>  
+  
+    <!-- **بخش** **تماس** **با** **ما** -->  
+    <section id="contact" class="contact-section">  
+        <div class="contact-container">  
+            <h2 class="section-title">**با** **ما** **در** **ارتباط** **باشید**</h2>  
+            <form onsubmit="event.preventDefault(); alert('**پیام** **شما** **با** **موفقیت** **ارسال** **شد**!');">  
+                <div class="form-group">  
+                    <label for="name">**نام** **و** **نام** **خانوادگی**:</label>  
+                    <input type="text" id="name" class="form-control" required placeholder="**مثال**: **علی** **رضایی**">  
+                </div>  
+                <div class="form-group">  
+                    <label for="phone">**شماره** **تماس**:</label>  
+                    <input type="tel" id="phone" class="form-control" required placeholder="0912...">  
+                </div>  
+                <div class="form-group">  
+                    <label for="message">**پیام** **شما**:</label>  
+                    <textarea id="message" class="form-control" required placeholder="**سوال** **یا** **درخواست** **خود** **را** **بنویسید**..."></textarea>  
+                </div>  
+                <button type="submit" class="btn-submit">**ارسال** **پیام**</button>  
+            </form>  
+        </div>  
+    </section>  
+  
+    <!-- **فوتر** -->  
+    <footer>  
+        <p>© 2024 - 2026 **تمامی** **حقوق** **برای** **فروشگاه** **لوازم** **خانگی** LUX HOME **محفوظ** **است**.</p>  
+    </footer>  
+  
+</body>  
+</html>  
